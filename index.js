@@ -11,7 +11,7 @@ app.on("ready", createWindow);
 function createWindow() {
     win = new BrowserWindow({ backgroundColor: '#FF6B00' });
     win.maximize();
-    win.loadURL('https://www.soungdcloud.com');
+    win.loadURL('https://www.soundcloud.com');
     shortCutHandler.init(win);
 }
 
