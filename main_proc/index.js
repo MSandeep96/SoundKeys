@@ -1,8 +1,12 @@
 const shortCutHandler = require('app_shortcuts');
+const electron=require('electron');
 const {session, BrowserWindow} = require('electron');
+const path= require('path');
+
+const iconPath=path.join(__dirname,'icon.png');
 
 let win;
-
+let tray;
 //app started
 function appReady() {
     createWindow();
@@ -10,17 +14,16 @@ function appReady() {
 
 
 function createWindow() {
-    win = new BrowserWindow({ backgroundColor: '#FF6B00', zoomToPageWidth: true });
-    win.maximize();
+    const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
+    win = new BrowserWindow({width,height, backgroundColor: '#FF6B00', icon });
     win.loadURL('https://www.soundcloud.com');
-    shortCutHandler.init(win);
+    shortCutHandler.initShorts(win);
 }
 
 //app closed
 function appClosed() {
-    clearCookies();
-    shortCutHandler.dest();
-    app.quit();
+    //clearCookies();
+    shortCutHandler.destShorts();
 }
 
 
@@ -34,18 +37,16 @@ function newBrowserWindowCreated(event, createdWindow) {
 
 function checkIfAuth(window) {
     var webUrl = window.webContents.getURL();
-    console.log(webUrl);
     var googleSignIn = webUrl.includes("google");
     var facebookSignIn = webUrl.includes("facebook");
     if (googleSignIn || facebookSignIn) {
         window.webContents.on('did-get-redirect-request', (event, old, newU, bl, res, req, ref, head) => {
-            if(googleSignIn){
-                window.close();
-                win.reload();
-            }else{
-                window.close();
-                proceedFBLogin();
-            }
+            window.webContents.on('did-finish-load', () => {
+                if(facebookSignIn){
+                    window.close();
+                    proceedFBLogin();
+                }
+            });
         });
     }
 }
