@@ -6,7 +6,8 @@ Supports Media keys and a few other shortcuts.
 
 Shortcuts included are:
 
-Global shortcuts : 
+Global shortcuts :
+
 | Keys                           | Actions          |
 |:------------------------------:|:----------------:|
 | `MediaNextTrack`               | Next Track       |
@@ -15,7 +16,8 @@ Global shortcuts :
 | `Ctrl+4`                       | Repeat Toggle    | 
 | `Ctrl+3`                       | Like Toggle      |
 
-When window is focused : 
+When window is focused :
+ 
 | Keys                           | Actions          |
 |:------------------------------:|:----------------:|
 | `MediaNextTrack or Ctrl+N`     | Next Track       |
