@@ -14,9 +14,13 @@ function appReady() {
 
 function createWindow() {
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
-    win = new BrowserWindow({width,height, backgroundColor: '#FF6B00', icon });
+    win = new BrowserWindow({width,height, backgroundColor: '#FF6B00', icon: iconPath, title: 'Soundkeys' ,autoHideMenuBar: true});
+    win.maximize();    
+    win.setMenu(null);
     win.loadURL('https://www.soundcloud.com');
-    shortCutHandler.initShorts(win);
+    win.webContents.on('dom-ready',()=>{
+        shortCutHandler.initShorts(win);
+    });
 }
 
 //app closed
@@ -28,7 +32,7 @@ function appClosed() {
 
 //browser Window was launched
 function newBrowserWindowCreated(event, createdWindow) {
-    createdWindow.webContents.on('did-finish-load', () => {
+    createdWindow.webContents.on('dom-ready', () => {
         checkIfAuth(createdWindow);
     });
 }
@@ -36,11 +40,10 @@ function newBrowserWindowCreated(event, createdWindow) {
 
 function checkIfAuth(window) {
     var webUrl = window.webContents.getURL();
-    var googleSignIn = webUrl.includes("google");
     var facebookSignIn = webUrl.includes("facebook");
-    if (googleSignIn || facebookSignIn) {
+    if (facebookSignIn) {
         window.webContents.on('did-get-redirect-request', (event, old, newU, bl, res, req, ref, head) => {
-            window.webContents.on('did-finish-load', () => {
+            window.webContents.on('dom-ready', () => {
                 if(facebookSignIn){
                     window.close();
                     proceedFBLogin();
