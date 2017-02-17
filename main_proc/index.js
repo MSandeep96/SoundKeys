@@ -6,7 +6,6 @@ const path= require('path');
 const iconPath=path.join(__dirname,'icon.png');
 
 let win;
-let tray;
 //app started
 function appReady() {
     createWindow();
