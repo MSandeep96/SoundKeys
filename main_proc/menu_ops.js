@@ -17,10 +17,6 @@ var app_menu = [
                 click : ()=>{
                     editShorts();
                 }
-            },
-            {
-                label : 'Zoom',
-                role : 'zoom'
             }
         ]
     }
