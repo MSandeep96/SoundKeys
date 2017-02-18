@@ -28,9 +28,9 @@ Notifications:
 
 Get notified about your actions when the window is out of focus.
 
-![Alt text](/Screenshots/likeClicked.png)
+![Alt text](/Screenshots/likeClicked.PNG)
 
-![Alt text](/Screenshots/repeatClicked.png)
+![Alt text](/Screenshots/repeatClicked.PNG)
 
 
 Login issues:
