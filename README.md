@@ -24,6 +24,15 @@ When window is focused :
 | `MediaPreviousTrack or Ctrl+P` | Previous Track   |
 | `MediaPlayPause or Space`      | Play/Pause Track |
 
+Notifications: 
+
+Get notified about your actions when the window is out of focus.
+
+![Alt text](/Screenshots/likeClicked.png)
+
+![Alt text](/Screenshots/repeatClicked.png)
+
+
 Login issues:
 As Electron opens each window in a seperate process, login callbacks are not being triggered properly.
-Facebook login might not go through properly. If you're facing this issue. Relaunch the app.
+Facebook login might not go through properly. If you're facing this issue. Relaunch the app or press F5.
