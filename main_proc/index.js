@@ -1,11 +1,8 @@
 const shortCutHandler = require('app_shortcuts');
-const electron=require('electron');
 const {session, BrowserWindow} = require('electron');
-const path= require('path');
-
-const iconPath=path.join(__dirname,'icon.png');
 
 let win;
+
 //app started
 function appReady() {
     createWindow();
@@ -13,9 +10,12 @@ function appReady() {
 
 
 function createWindow() {
+    var path= require('path');
+    var iconPath=path.join(__dirname,'icon.png');
+    var electron=require('electron');
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({width,height, backgroundColor: '#FF6B00', icon: iconPath, title: 'Soundkeys' ,autoHideMenuBar: true});
-    win.maximize();    
+    win.maximize(); 
     win.setMenu(null);
     win.loadURL('https://www.soundcloud.com');
     win.webContents.on('dom-ready',()=>{
@@ -69,6 +69,18 @@ function clearCookies() {
     });
 }
 
+var callBackObj = {
+    changeNotify,
+    changeShortCuts
+};
+
+function changeNotify(notifVal){
+    shortCutHandler.changeNotify(notifVal);
+}
+
+function changeShortCuts(){
+    // TODO: Add shiz
+}
 
 module.exports = {
     appReady,
