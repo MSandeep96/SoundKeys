@@ -1,5 +1,6 @@
 const shortCutHandler = require('app_shortcuts');
 const {session, BrowserWindow} = require('electron');
+const appMenu = require('./menu_ops.js');
 
 let win;
 
@@ -16,11 +17,16 @@ function createWindow() {
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({width,height, backgroundColor: '#FF6B00', icon: iconPath, title: 'Soundkeys' ,autoHideMenuBar: true});
     win.maximize(); 
-    win.setMenu(null);
+    win.setMenu(fetchMenu());
     win.loadURL('https://www.soundcloud.com');
     win.webContents.on('dom-ready',()=>{
         shortCutHandler.initShorts(win);
     });
+}
+
+function fetchMenu(){
+    appMenu.init(callBackObj);
+    return appMenu.getMenu();
 }
 
 //app closed

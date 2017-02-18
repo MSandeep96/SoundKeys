@@ -1,3 +1,5 @@
+const {Menu} = require('electron');
+
 var app_menu = [
     {
         label : 'Settings',
@@ -5,6 +7,7 @@ var app_menu = [
             {
                 label : 'Notify',
                 type : 'checkbox',
+                checked : true,
                 click : (menuItem)=>{
                     changeVar(menuItem);
                 }
@@ -30,10 +33,21 @@ function init(callBa){
 }
 
 function changeVar(menuItem){
-    callBack.changeNotify(menuItem.enabled);
+    console.log(menuItem.checked);
+    callBack.changeNotify(menuItem.checked);
 }
 
 function editShorts(){
     callBack.changeShortcuts();
 }
 
+function getMenu(){
+    return Menu.buildFromTemplate(app_menu);
+}
+
+module.exports={
+    init,
+    changeVar,
+    editShorts,
+    getMenu
+};
