@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron-config": "^0.2.1",
     "electron-json-storage": "^3.0.1",
     "electron-localshortcut": "^1.0.0"
   }

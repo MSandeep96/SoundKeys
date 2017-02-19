@@ -1,6 +1,8 @@
-const shortCutHandler = require('app_shortcuts');
+const shortCutHandler = require('../app_shortcuts');
 const {session, BrowserWindow} = require('electron');
 const appMenu = require('./menu_ops.js');
+const Config = require('electron-config');
+const config = new Config({name:'soundkeys_config'});
 
 let win;
 
@@ -19,9 +21,7 @@ function createWindow() {
     win.maximize(); 
     win.setMenu(fetchMenu());
     win.loadURL('https://www.soundcloud.com');
-    win.webContents.on('dom-ready',()=>{
-        shortCutHandler.initShorts(win);
-    });
+    loadUserSettings();
 }
 
 function fetchMenu(){
@@ -29,9 +29,34 @@ function fetchMenu(){
     return appMenu.getMenu();
 }
 
+function loadUserSettings(){
+    var zoom_fac;
+    if(!config.has('first_time')){
+        zoom_fac=1.0;
+        config.set('first_time',false);
+        config.set('zoom_factor',zoom_fac);
+        var ops={
+            type: "info",
+            buttons: [],
+            title : "Settings",
+            message: "For disabling notifications or editing shortcuts, press [Alt] to reveal the title bar."
+        }
+        var {dialog} = require('electron');
+        dialog.showMessageBox(win,ops);
+    }else{
+        zoom_fac=config.get('zoom_factor');
+        //TODO: Bug in electron can't deploy this issue
+        /*win.webContents.on('dom-ready',()=>{
+            win.webContents.setZoomFactor(zoom_fac);
+        });*/
+    }
+    shortCutHandler.initShorts(win,zoom_fac);
+}
+
 //app closed
 function appClosed() {
     //clearCookies();
+    config.set('zoom_factor',shortCutHandler.getZoomFactor());
     shortCutHandler.destShorts();
 }
 

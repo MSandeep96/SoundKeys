@@ -11,13 +11,13 @@ var app_menu = [
                 click : (menuItem)=>{
                     changeVar(menuItem);
                 }
-            },
+            },/*
             {
                 label : 'Edit shortcuts',
                 click : ()=>{
                     editShorts();
                 }
-            }
+            }*/
         ]
     }
 ];
