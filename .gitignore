@@ -1,2 +1,6 @@
 /.vscode/launch.json
 /snippets.txt
+/node_modules
+/soundkeys-win32-x64
+/SoundKeys
+/SoundKeys.zip
