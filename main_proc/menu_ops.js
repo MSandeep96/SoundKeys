@@ -11,13 +11,13 @@ var app_menu = [
                 click : (menuItem)=>{
                     changeVar(menuItem);
                 }
-            },/*
+            },
             {
                 label : 'Edit shortcuts',
                 click : ()=>{
                     editShorts();
                 }
-            }*/
+            }
         ]
     }
 ];
@@ -29,7 +29,6 @@ function init(callBa){
 }
 
 function changeVar(menuItem){
-    console.log(menuItem.checked);
     callBack.changeNotify(menuItem.checked);
 }
 
