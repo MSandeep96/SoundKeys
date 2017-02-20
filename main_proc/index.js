@@ -136,8 +136,13 @@ function changeNotify(notifVal) {
 }
 
 function changeShortcuts() {
+    var mappingsPath = dataPath + '\\mappings.json';
+    var fs = require('fs');
+    if(!fs.existsSync(mappingsPath)){
+        copyShortCutsFile();
+    }
     var {shell} = require('electron');
-    shell.openItem(dataPath + '\\mappings.json');
+    shell.openItem(mappingsPath);
 }
 
 module.exports = {

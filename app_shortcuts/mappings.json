@@ -12,7 +12,6 @@
     "map": {
         "Ctrl+N": "nextClicked",
         "Ctrl+P": "prevClicked",
-        "Space": "pauseClicked",
         "F5": "reloadWind",
         "Ctrl+=": "zoomIncrease",
         "Ctrl+-": "zoomDecrease"
