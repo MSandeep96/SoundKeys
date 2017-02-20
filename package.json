@@ -1,16 +1,25 @@
 {
   "name": "soundkeys",
   "version": "1.0.0",
-  "description": "",
+  "description": "The SoundCloud wrapped in Electron.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "MSandeep96",
+  "license": "MIT",
   "dependencies": {
     "electron-config": "^0.2.1",
-    "electron-json-storage": "^3.0.1",
-    "electron-localshortcut": "^1.0.0"
-  }
+    "electron-localshortcut": "^1.0.0",
+    "jsonminify": "^0.4.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MSandeep96/SoundKeys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MSandeep96/SoundKeys/issues"
+  },
+  "homepage": "https://github.com/MSandeep96/SoundKeys#readme"
 }
