@@ -1,5 +1,0 @@
-//clear cache
-
-electronConstants().mySession.clearStorageData([], function (data) {
-    console.log(data);
-})
