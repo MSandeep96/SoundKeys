@@ -73,8 +73,6 @@ function displayFirstTimeDialog() {
 function copyShortCutsFile() {
     var fs = require('fs');
     var shorts = fs.readFileSync('./app_shortcuts/mappings.json');
-    console.log(shorts);
-    console.log(dataPath + '\\mappings.json');
     fs.writeFileSync(dataPath + '\\mappings.json', shorts);
 }
 

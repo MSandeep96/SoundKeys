@@ -3,8 +3,9 @@
 The SoundCloud wrapped in Electron.
 
 Supports Media keys and a few other shortcuts.
+Has functionality to specify your own shortcuts too.
 
-Shortcuts included are:
+Default shortcuts included are:
 
 Global shortcuts :
 
@@ -16,7 +17,7 @@ Global shortcuts :
 | `Ctrl+4`                       | Repeat Toggle    | 
 | `Ctrl+3`                       | Like Toggle      |
 
-When window is focused :
+When window is visible :
  
 | Keys                           | Actions          |
 |:------------------------------:|:----------------:|
@@ -26,13 +27,13 @@ When window is focused :
 
 Notifications: 
 
-Get notified about your actions when the window is out of focus.
+Get notified about your actions when the window is not visible.
 
 ![Alt text](/Screenshots/likeClicked.PNG)
 
 ![Alt text](/Screenshots/repeatClicked.PNG)
 
 
-Login issues:
-As Electron opens each window in a seperate process, login callbacks are not being triggered properly.
-Facebook login might not go through properly. If you're facing this issue. Relaunch the app or press F5.
+**Login issues**:  
+As Electron opens each window in a seperate process, login callbacks aren't triggered properly.  
+Facebook login might not go through properly. If after login the page is stuck, relaunch the app or press F5 (reload).
