@@ -1,9 +1,10 @@
-# SoundKeys
+# <img src='./main_proc/icon.png' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
 
-The SoundCloud wrapped in Electron.
+The SoundCloud website wrapped in Electron with shortcuts for a native experience.
 
-Supports Media keys and a few other shortcuts.
-Has functionality to specify your own shortcuts too.
+Supports Media keys and a few other shortcuts.  
+User can further edit the shortcuts to his desire.  
+(Setting->Edit Shortcuts)
 
 Default shortcuts included are:
 
@@ -25,7 +26,7 @@ When window is visible :
 | `MediaPreviousTrack or Ctrl+P` | Previous Track   |
 | `MediaPlayPause or Space`      | Play/Pause Track |
 
-Notifications: 
+## Notifications 
 
 Get notified about your actions when the window is not visible.
 
@@ -34,6 +35,12 @@ Get notified about your actions when the window is not visible.
 ![Alt text](/Screenshots/repeatClicked.PNG)
 
 
-**Login issues**:  
+### Install
+
+Download from [here](https://github.com/MSandeep96/SoundKeys/releases).
+
+##### Login issues:
+
 As Electron opens each window in a seperate process, login callbacks aren't triggered properly.  
-Facebook login might not go through properly. If after login the page is stuck, relaunch the app or press F5 (reload).
+If the application stalls for you, reload the page and try to login again.  
+Reload is mapped to F5.
