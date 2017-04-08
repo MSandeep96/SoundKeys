@@ -6,7 +6,7 @@ Supports Media keys and a few other shortcuts.
 User can further edit the shortcuts to his desire.  
 (Setting->Edit Shortcuts)
 
-Default shortcuts included are:
+Default shortcuts included are: 😎 
 
 Global shortcuts :
 
@@ -28,7 +28,7 @@ When window is visible :
 
 ## Notifications 
 
-Get notified about your actions when the window is not visible.
+Get notified about your actions when the window is not visible. 💯  
 
 ![Alt text](/Screenshots/likeClicked.PNG)
 
@@ -37,10 +37,29 @@ Get notified about your actions when the window is not visible.
 
 ### Install
 
-Download from [here](https://github.com/MSandeep96/SoundKeys/releases).
+Download from [here](https://github.com/MSandeep96/SoundKeys/releases). 💎 
 
-##### Login issues:
+
+### Build  
+
+Building is a piece of cake as the app uses Electron. 🍰  
+Follow these instructions to setup the app.  
+
+	git clone https://github.com/MSandeep96/SoundKeys.git
+	cd SoundKeys
+	npm install
+	npm start
+
+You might want to consider installing Electron globally as it's huge. (~140 MB)  
+Feel free to create an ISSUE or shoot me an email for any help. ✌️  
+The app hasn't been tested on Linux or OSX. Please provide feedback if you did.
+
+### RoadMap
+
+Check the Projects tab for the roadmap. 😸
+
+##### Login issues: 😿
 
 As Electron opens each window in a seperate process, login callbacks aren't triggered properly.  
-If the application stalls for you, reload the page and try to login again.  
+If the application stalls for you, reload the page and try to login again. (Sometimes twice)  
 Reload is mapped to F5.
