@@ -14,7 +14,7 @@ html,body{
 
 .title-bar{
 	height: 30px;
-	flex: 0 1 1;
+	flex: 0 1 auto;
 	display: flex;
 	justify-content: space-between;
 	-webkit-app-region : drag;
@@ -36,7 +36,7 @@ html,body{
 	flex: 1 1 auto;
 }
 
-.win-btns button{
+.win-btns button,.nav-btns button{
 	background: none;
 	border: none;
 	outline: none;
@@ -56,7 +56,7 @@ html,body{
 	position: absolute;
 	border-color: #CCCCCC;
 	border-style: solid;
-	border-width: 0 0 2px 0;
+	border-width: 0 0 3px 0;
 }
 
 .win-btns button:hover{
@@ -64,11 +64,11 @@ html,body{
 }
 
 #win-min:before {
-	border-bottom-width: 2px;
+	border-bottom-width: 3px;
 }
 
 #win-max:before {
-	border-width: 1px 1px 2px 1px;
+	border-width: 1px 1px 3px 1px;
 }
 
 #win-close:before,
@@ -97,4 +97,52 @@ html,body{
 
 #win-close:after{
 	transform: rotate(-45deg);
+}
+
+#back-nav:before{
+	position: absolute;
+    top: 30%;
+	bottom: 30%;
+	right: 30%;
+	left: 30%;
+    content: "";
+    border-left: 3px solid #CCCCCC;
+    border-top: 3px solid #CCCCCC;
+    transform: rotate(-45deg);
+}
+
+#back-nav:hover::before,#forw-nav:hover::before{
+	border-color: #333333;
+}
+
+#back-nav:hover,#forw-nav:hover{
+	background-color: #CCCCCC;
+}
+
+#forw-nav:before{
+	position: absolute;
+    top: 30%;
+	bottom: 30%;
+	right: 30%;
+	left: 30%;
+    content: "";
+    border-right: 3px solid #CCCCCC;
+    border-top: 3px solid #CCCCCC;
+    transform: rotate(45deg);
+}
+
+#reload-nav{
+	background-color: #CCCCCC;
+	-webkit-mask-image: url("./assets/refresh.svg");
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	padding: 0;
+}
+
+#reload-nav:hover{
+	background-color: #CCCCCC;
+	background-image: url("./assets/refresh.svg");
+	-webkit-mask-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
 }
