@@ -3,6 +3,8 @@ const {session, BrowserWindow} = require('electron');
 const appMenu = require('./menu_ops.js');
 const Config = require('electron-config');
 const config = new Config({ name: 'soundkeys_config' });
+const path = require("path");
+const url = require("url");
 
 var dataPath;
 
@@ -23,7 +25,13 @@ function createWindow() {
     win = new BrowserWindow({ width, height, backgroundColor: '#FF6B00', icon: iconPath, title: 'Soundkeys', autoHideMenuBar: true });
     win.maximize();
     win.setMenu(fetchMenu());
-    win.loadURL('https://www.soundcloud.com');
+    var htmlUrl = url.format({
+        pathname : path.join(__dirname,"../src/index.html"),
+        protocol : "file:",
+        slashes : true
+    });
+    win.loadURL(htmlUrl);
+    win.webContents.openDevTools("undocked");
     loadUserSettings();
 }
 
