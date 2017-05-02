@@ -17,10 +17,12 @@ ipcRenderer.on("webu",(event,arg)=>{
 
 var wbView = document.getElementById("wview");
 
-wbView.addEventListener("did-finish-load", ()=>{ 
-	console.log("here");
-	console.log(document.getElementById("splash-img"));
+wbView.addEventListener("did-finish-load", ()=>{
 	document.getElementById("splash-img").style.display = "none"; 
+});
+
+wbView.addEventListener("page-title-updated",()=>{
+	document.getElementById("title-text").innerHTML = wbView.getTitle();
 });
 
 function minimizeWin(){

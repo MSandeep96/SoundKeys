@@ -21,6 +21,25 @@ html,body{
 	flex-direction: column;
 }
 
+.title{
+	display: flex;
+}
+
+.title-img{
+	height: 30px;
+	width: 30px;
+	padding: 5px;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+#title-text{
+	font-family: 'Times New Roman', Times, serif;
+	color: #CCCCCC;
+	font-size: 14px;
+	margin: 8px 0 0 0;
+}
+
 .title-bar{
 	height: 30px;
 	flex: 0 1 auto;

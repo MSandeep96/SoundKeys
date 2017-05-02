@@ -15,12 +15,13 @@ function createWindow(){
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({
         frame: false,
-        width : 800,
-        height : 600,
+        width : width,
+        height : height,
         backgroundColor: '#333333',
         title: 'Soundkeys',
         autoHideMenuBar: true
     });
+    win.maximize();
     var htmlUrl = url.format({
         pathname : path.join(__dirname,"./src/index.html"),
         protocol : "file:",
