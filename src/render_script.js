@@ -1,7 +1,4 @@
 const {ipcRenderer} = require("electron");
-
-// wbView.addEventListener("dom-ready", function(){ wbView.openDevTools(); });
-
 /*
 wbView.addEventListener("ipc-message",(e)=>{
 	console.log("here");
@@ -19,6 +16,12 @@ ipcRenderer.on("webu",(event,arg)=>{
 */
 
 var wbView = document.getElementById("wview");
+
+wbView.addEventListener("did-finish-load", ()=>{ 
+	console.log("here");
+	console.log(document.getElementById("splash-img"));
+	document.getElementById("splash-img").style.display = "none"; 
+});
 
 function minimizeWin(){
 	ipcRenderer.send("min_win");
