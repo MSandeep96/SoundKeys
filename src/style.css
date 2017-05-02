@@ -1,8 +1,33 @@
-body{
+html,body{
 	margin: 0;
-}
-
-body,#wview{
 	height: 100%;
 	width : 100%;
+	overflow: hidden;
+}
+
+.content{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.title-bar{
+	flex: 0 1 auto;
+	display: flex;
+	justify-content: space-between;
+	-webkit-app-region : drag;
+	-webkit-user-select: none;
+}
+
+.title-bar .nav-btns button{
+	-webkit-app-region : no-drag;
+}
+
+.title-bar .win-btns button{
+	-webkit-app-region : no-drag;
+}
+
+#wview{
+	flex: 1 1 auto;
 }

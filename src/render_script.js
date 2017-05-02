@@ -1,7 +1,8 @@
-var wbView = document.getElementById("wview");
 const {ipcRenderer} = require("electron");
 
-wbView.addEventListener("dom-ready", function(){ wbView.openDevTools(); });
+// wbView.addEventListener("dom-ready", function(){ wbView.openDevTools(); });
+
+/*
 wbView.addEventListener("ipc-message",(e)=>{
 	console.log("here");
 	console.log(e.channel+ " " + e.arg);
@@ -15,9 +16,30 @@ ipcRenderer.on("alright",(event,arg)=>{
 ipcRenderer.on("webu",(event,arg)=>{
 	wbView.send("webu",arg);
 });
+*/
 
-function exp(){
-	wbView.send("webu");
+var wbView = document.getElementById("wview");
+
+function minimizeWin(){
+	ipcRenderer.send("min_win");
 }
 
-console.log("init");
+function maximizeWin(){
+	ipcRenderer.send("max_win");
+}
+
+function closeWin(){
+	ipcRenderer.send("close_win");
+}
+
+function backNav(){
+	if(wbView.canGoBack()){
+		wbView.goBack();
+	}
+}
+
+function forwNav(){
+	if(wbView.canGoForward()){
+		wbView.goForward();
+	}
+}

@@ -1,5 +1,6 @@
 const {ipcRenderer} = require("electron");
 
+/*
 document.addEventListener("DOMContentLoaded",()=>{
 	console.log("sending ");
 	ipcRenderer.sendToHost("hello","howdy");
@@ -10,3 +11,4 @@ ipcRenderer.on("webu",(event,arg)=>{
 	console.log(a);
 	a.click();
 });
+*/
