@@ -43,3 +43,7 @@ function forwNav(){
 		wbView.goForward();
 	}
 }
+
+function reloadNav(){
+	wbView.reload();
+}

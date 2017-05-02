@@ -13,21 +13,88 @@ html,body{
 }
 
 .title-bar{
-	flex: 0 1 auto;
+	height: 30px;
+	flex: 0 1 1;
 	display: flex;
 	justify-content: space-between;
 	-webkit-app-region : drag;
 	-webkit-user-select: none;
+	background-color: #333333;
 }
 
 .title-bar .nav-btns button{
 	-webkit-app-region : no-drag;
+	height: 100%;
 }
 
 .title-bar .win-btns button{
 	-webkit-app-region : no-drag;
+	height: 100%;
 }
 
 #wview{
 	flex: 1 1 auto;
+}
+
+.win-btns button{
+	background: none;
+	border: none;
+	outline: none;
+	width: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+}
+
+.win-btns button:before,
+.win-btns button:after {
+	top: 30%;
+	right: 30%;
+	bottom: 30%;
+	left: 30%;
+	content: "";
+	position: absolute;
+	border-color: #CCCCCC;
+	border-style: solid;
+	border-width: 0 0 2px 0;
+}
+
+.win-btns button:hover{
+	 background-color: #CCCCCC;
+}
+
+#win-min:before {
+	border-bottom-width: 2px;
+}
+
+#win-max:before {
+	border-width: 1px 1px 2px 1px;
+}
+
+#win-close:before,
+#win-close:after {
+	bottom: 50%;
+	top: 50%;
+}
+
+#win-close:hover{
+	background-color: #E04343;
+}
+
+.win-btns button:hover:after,
+.win-btns button:hover:before {
+	border-color: #333333;
+}
+
+#win-close:hover:after,
+#win-close:hover:before {
+	border-color: #FFFFFF;
+}
+
+#win-close:before{
+	transform: rotate(45deg);
+}
+
+#win-close:after{
+	transform: rotate(-45deg);
 }

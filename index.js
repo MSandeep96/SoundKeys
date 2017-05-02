@@ -15,9 +15,9 @@ function createWindow(){
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({
         frame: false,
-        width : 800, 
+        width : 800,
         height : 600,
-        backgroundColor: '#FF6B00',
+        backgroundColor: '#333333',
         title: 'Soundkeys',
         autoHideMenuBar: true
     });
@@ -29,14 +29,6 @@ function createWindow(){
     win.loadURL(htmlUrl);
     win.webContents.openDevTools("undocked");
 }
-
-ipcMain.on("back_nav",()=>{
-
-});
-
-ipcMain.on("forw_nav",()=>{
-
-});
 
 ipcMain.on("min_win",()=>{
     win.minimize();
@@ -58,13 +50,13 @@ ipcMain.on("close_win",()=>{
 
 // TODO: Remove if not required
 function clearCookies() {
-    session.defaultSession.clearStorageData([], function (data) {
+    electron.session.defaultSession.clearStorageData([], function (data) {
         console.log("Wazzap");
     });
 }
 
 app.on("window-all-closed",()=>{
-    clearCookies();
+    // clearCookies();
     // mainHandler.appClosed();
     app.quit();
 });
