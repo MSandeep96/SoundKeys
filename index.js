@@ -48,7 +48,7 @@ function registerShorts(){
 
 	globalShortcut.register("MediaStop",()=>{
 		//quit the app?
-		win.webContents.send("shortCut","playTrack");
+        win.close();
 	});
 
 	globalShortcut.register("CommandOrControl+3",()=>{
