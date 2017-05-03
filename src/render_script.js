@@ -5,17 +5,13 @@ wbView.addEventListener("ipc-message",(e)=>{
 	console.log(e.channel+ " " + e.arg);
 	ipcRenderer.send("got_data","wassup");
 });
-
-ipcRenderer.on("alright",(event,arg)=>{
-	console.log(arg);
-});
-
-ipcRenderer.on("webu",(event,arg)=>{
-	wbView.send("webu",arg);
-});
 */
 
 var wbView = document.getElementById("wview");
+
+ipcRenderer.on("shortCut",(event,arg)=>{
+	wbView.send(arg);
+});
 
 wbView.addEventListener("did-finish-load", ()=>{
 	document.getElementById("splash-img").style.display = "none"; 

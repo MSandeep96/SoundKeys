@@ -2,13 +2,14 @@ const electron = require("electron");
 const {app, BrowserWindow} = require("electron");
 const path = require("path");
 const url = require("url");
-const {ipcMain} = require("electron");
+const {ipcMain,globalShortcut} = require("electron");
 
 let win;
 
 app.on("ready", ()=>{
     //mainHandler.appReady(app.getPath('userData'));
     createWindow();
+    registerShorts();
 });
 
 function createWindow(){
@@ -22,6 +23,7 @@ function createWindow(){
         autoHideMenuBar: true
     });
     win.maximize();
+    // win.setSkipTaskbar(true);
     var htmlUrl = url.format({
         pathname : path.join(__dirname,"./src/index.html"),
         protocol : "file:",
@@ -30,6 +32,37 @@ function createWindow(){
     win.loadURL(htmlUrl);
     win.webContents.openDevTools("undocked");
 }
+
+function registerShorts(){
+	globalShortcut.register("MediaNextTrack",()=>{
+		win.webContents.send("shortCut","nextTrack");
+	});
+
+	globalShortcut.register("MediaPreviousTrack",()=>{
+		win.webContents.send("shortCut","prevTrack");
+	});
+
+	globalShortcut.register("MediaPlayPause",()=>{
+		win.webContents.send("shortCut","playTrack");
+	});
+
+	globalShortcut.register("MediaStop",()=>{
+		//quit the app?
+		win.webContents.send("shortCut","playTrack");
+	});
+
+	globalShortcut.register("CommandOrControl+3",()=>{
+		//repeat toggle
+		win.webContents.send("shortCut","likeTrack");
+	});
+	
+	globalShortcut.register("CommandOrControl+4",()=>{
+		//like here
+		win.webContents.send("shortCut","repeatTrack");
+	});
+
+}
+
 
 ipcMain.on("min_win",()=>{
     win.minimize();
@@ -59,5 +92,6 @@ function clearCookies() {
 app.on("window-all-closed",()=>{
     // clearCookies();
     // mainHandler.appClosed();
+    win = null;
     app.quit();
 });

@@ -2,8 +2,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 const {globalShortcut} = require('electron');
 const codesExec = require('./exec_code');
 const Config = require('electron-config');
-const config = new Config({ name: 'soundkeys_config' });
-
+const config = new Config({ name: 'soundkeys_config' })
 
 let win;
 let zoomFactor;
