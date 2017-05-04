@@ -1,0 +1,40 @@
+<head>
+	<title>Some title</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="content" id="sc-full">
+
+		<div class="title-bar">
+
+			<div class="nav-btns">
+				<button id="back-nav" onclick="backNav()"></button>
+				<button id="forw-nav" onclick="forwNav()"></button>
+				<button id="reload-nav" onclick="reloadNav()"></button>
+			</div>
+			<div class="title">
+				<img class="title-img" src="./assets/icon.png" />
+				<p id="title-text">Soundkeys</p>
+			</div>
+			<div class="win-btns">
+				<button id="min-player" onclick="openMiniPlayer()"></button>
+				<button id="win-min" onclick="minimizeWin()"></button>
+				<button id="win-max" onclick="maximizeWin()"></button>
+				<button id="win-close" onclick="closeWin()"></button>
+			</div>
+
+		</div>
+
+		<webview id="wview" src="https://soundcloud.com" allowpopups preload="./preload_script.js"></webview>
+		<img id="splash-img" draggable="false" src="./assets/icon.png" />
+	</div>
+	<div class="mini-player" id="min-play">
+		<img class="mini-img" src="#"/>
+		<div class="play-controls">
+		</div>
+		<div class="song-opts">
+		</div>
+	</div>
+	<script src="render_script.js"></script>
+</body>
