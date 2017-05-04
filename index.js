@@ -7,7 +7,6 @@ const {ipcMain,globalShortcut} = require("electron");
 let win;
 
 app.on("ready", ()=>{
-    //mainHandler.appReady(app.getPath('userData'));
     createWindow();
     registerShorts();
 });
@@ -23,7 +22,6 @@ function createWindow(){
         autoHideMenuBar: true
     });
     win.maximize();
-    // win.setSkipTaskbar(true);
     var htmlUrl = url.format({
         pathname : path.join(__dirname,"./src/index.html"),
         protocol : "file:",
