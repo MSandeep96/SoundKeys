@@ -4,7 +4,8 @@
   "description": "The SoundCloud wrapped in Electron.",
   "main": "index.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "test" : "eslint ."
   },
   "author": "MSandeep96",
   "license": "MIT",
