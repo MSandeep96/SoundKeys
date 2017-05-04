@@ -11,8 +11,17 @@ app.on("ready", ()=>{
     registerShorts();
 });
 
+app.on("window-all-closed",()=>{
+    win = null;
+    app.quit();
+});
+
+/**
+ * Creates our main window
+ */
 function createWindow(){
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
+
     win = new BrowserWindow({
         frame: false,
         width : width,
@@ -21,16 +30,22 @@ function createWindow(){
         title: 'Soundkeys',
         autoHideMenuBar: true
     });
+
     win.maximize();
+
     var htmlUrl = url.format({
         pathname : path.join(__dirname,"./src/index.html"),
         protocol : "file:",
         slashes : true
     });
+    
     win.loadURL(htmlUrl);
     win.webContents.openDevTools("undocked");
 }
 
+/**
+ * Register the global shortcuts
+ */
 function registerShorts(){
 	globalShortcut.register("MediaNextTrack",()=>{
 		win.webContents.send("shortCut","nextTrack");
@@ -76,20 +91,4 @@ ipcMain.on("max_win",()=>{
 
 ipcMain.on("close_win",()=>{
     win.close();
-});
-
-// app.on('browser-window-created', mainHandler.newBrowserWindowCreated);
-
-// TODO: Remove if not required
-function clearCookies() {
-    electron.session.defaultSession.clearStorageData([], function (data) {
-        console.log("Wazzap");
-    });
-}
-
-app.on("window-all-closed",()=>{
-    // clearCookies();
-    // mainHandler.appClosed();
-    win = null;
-    app.quit();
 });

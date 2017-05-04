@@ -1,11 +1,4 @@
 const {ipcRenderer} = require("electron");
-/*
-wbView.addEventListener("ipc-message",(e)=>{
-	console.log("here");
-	console.log(e.channel+ " " + e.arg);
-	ipcRenderer.send("got_data","wassup");
-});
-*/
 
 var wbView = document.getElementById("wview");
 
