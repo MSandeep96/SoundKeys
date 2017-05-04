@@ -14,6 +14,12 @@ wbView.addEventListener("page-title-updated",()=>{
 	document.getElementById("title-text").innerHTML = wbView.getTitle();
 });
 
+function openMiniPlayer(){
+	ipcRenderer.send("mini_player");
+	document.getElementById("sc-full").style.display = "none"; 
+	document.getElementById("min-play").style.display = "inline"; 
+}
+
 function minimizeWin(){
 	ipcRenderer.send("min_win");
 }
