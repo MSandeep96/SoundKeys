@@ -30,10 +30,19 @@
 		<img id="splash-img" draggable="false" src="./assets/icon.png" />
 	</div>
 	<div class="mini-player" id="min-play">
-		<img class="mini-img" src="#"/>
+		<div class="details">
+			<img class="mini-img" src="#"/>
+			<p class="track-details"></p>
+		</div>
 		<div class="play-controls">
+			<button class="pc-prev" onclick="prevClicked()">Prev</button>
+			<button class="pc-play" onclick="playClicked()">Play</button>
+			<button class="pc-next" onclick="nextClicked()">Next</button>
 		</div>
 		<div class="song-opts">
+			<button class="so-like" onclick="likeClicked()">Like</button>
+			<button class="so-repeat" onclick="repeatClicked()">Repeat</button>
+			<button class="so-web" onclick="webClicked()">Maxim</button>
 		</div>
 	</div>
 	<script src="render_script.js"></script>

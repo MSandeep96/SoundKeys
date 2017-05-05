@@ -94,8 +94,15 @@ function clearCookies() {
 }
 
 ipcMain.on("mini_player", () => {
-	win.setSize(200, 200);
+	win.setSize(200, 600);
 	positionWin();
+});
+
+ipcMain.on("web_player",()=>{
+	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
+	win.setSize(width, height);
+	win.setPosition(0,0);
+	win.maximize();
 });
 
 ipcMain.on("min_win", () => {

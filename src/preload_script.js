@@ -13,6 +13,19 @@ ipcRenderer.on("webu",(event,arg)=>{
 });
 */
 
+ipcRenderer.on("mini_player",(event,arg)=>{
+	var playerState = {};
+	var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
+	var imageStyle = window.getComputedStyle(songArt,false);
+	playerState.img_url = imageStyle.backgroundImage.slice(4,-1).replace(/120/g,200);
+	
+	playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
+
+	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
+
+	ipcRenderer.sendToHost("min_play",playerState);
+});
+
 ipcRenderer.on("nextTrack",(event,arg)=>{
 	document.getElementsByClassName("playControls__next")[0].click();
 });

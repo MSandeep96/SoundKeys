@@ -14,13 +14,26 @@ html,body{
 	transform: translate(-50%,-50%)
 }
 
-.mini-player{
-	position: absolute;
-	display: none;
-	bottom: 0%;
-	right: 0%;
+.play-controls,.song-options{
+	display: flex;
+	justify-content: space-between;
 }
 
+.play-controls button{
+	width: 65px;
+	height: 20px;
+}
+
+.mini-player{
+	display: none;
+	height: 100%;
+	width: 100%;
+}
+
+.mini-img{
+	height: 200px;
+	width: 200px;
+}
 .content{
 	height: 100%;
 	width: 100%;
