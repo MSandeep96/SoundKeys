@@ -7,11 +7,18 @@ ipcRenderer.on("shortCut",(event,arg)=>{
 });
 
 wbView.addEventListener("did-finish-load", ()=>{
+	wbView.openDevTools();
 	document.getElementById("splash-img").style.display = "none"; 
 });
 
 wbView.addEventListener("page-title-updated",()=>{
 	document.getElementById("title-text").innerHTML = wbView.getTitle();
+});
+
+wbView.addEventListener("ipc-message",(event)=>{
+	if(event.channel==="min_play"){
+		setMiniplayer(event.args[0]);
+	}
 });
 
 function openMiniPlayer(){
@@ -21,8 +28,10 @@ function openMiniPlayer(){
 	document.getElementById("min-play").style.display = "inline";
 }
 
-ipcRenderer.on("ipc-message",(eve))
-
+function setMiniplayer(details){
+	//set miniplayer elements
+	document.getElementsByClassName("mini-img")[0].src= details.img_url;
+}
 
 function minimizeWin(){
 	ipcRenderer.send("min_win");
@@ -58,6 +67,7 @@ function repeatClicked(){
 
 function webClicked(){
 	ipcRenderer.send("web_player");
+	wbView.send("web_player");
 	document.getElementById("sc-full").style.display = "flex"; 
 	document.getElementById("min-play").style.display = "none"; 
 }

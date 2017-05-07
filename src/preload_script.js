@@ -1,29 +1,48 @@
 const {ipcRenderer} = require("electron");
 
-/*
-document.addEventListener("DOMContentLoaded",()=>{
-	console.log("sending ");
-	ipcRenderer.sendToHost("hello","howdy");
-});
+var inMiniState = false;
 
-ipcRenderer.on("webu",(event,arg)=>{
-	var a = document.getElementsByClassName("playControls__play")[0];
-	console.log(a);
-	a.click();
-});
-*/
+var presentTitle;
+var trackListener;
 
 ipcRenderer.on("mini_player",(event,arg)=>{
+
+	//set present title of track
+	inMiniState = true;
+	presentTitle = document.getElementsByClassName("playbackSoundBadge__title")[0].children[1].innerHTML;
+	trackListener = setInterval(checkTrackTitle,500);		//check every 500ms for update
+
+	sendTrackDetails();
+});
+
+function sendTrackDetails(){
+	//send title avatar like and repeat status to host
 	var playerState = {};
+
+	playerState.title = presentTitle;
+
 	var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
 	var imageStyle = window.getComputedStyle(songArt,false);
-	playerState.img_url = imageStyle.backgroundImage.slice(4,-1).replace(/120/g,200);
+	playerState.img_url = imageStyle.backgroundImage.slice(5,-2);
 	
 	playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
 
 	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
 
 	ipcRenderer.sendToHost("min_play",playerState);
+}
+
+function checkTrackTitle(){
+	var title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[1].innerHTML;
+	console.log(title + " "+ presentTitle);
+	if(title !== presentTitle){
+		presentTitle = title;
+		sendTrackDetails();
+	}
+}
+
+ipcRenderer.on("web_player",(event,arg)=>{
+	clearInterval(trackListener);
 });
 
 ipcRenderer.on("nextTrack",(event,arg)=>{
