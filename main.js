@@ -94,7 +94,7 @@ function clearCookies() {
 }
 
 ipcMain.on("mini_player", () => {
-	win.setSize(200, 600);
+	win.setSize(600, 600);
 	positionWin();
 });
 

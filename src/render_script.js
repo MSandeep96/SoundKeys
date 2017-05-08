@@ -7,7 +7,6 @@ ipcRenderer.on("shortCut",(event,arg)=>{
 });
 
 wbView.addEventListener("did-finish-load", ()=>{
-	wbView.openDevTools();
 	document.getElementById("splash-img").style.display = "none"; 
 });
 
@@ -16,6 +15,7 @@ wbView.addEventListener("page-title-updated",()=>{
 });
 
 wbView.addEventListener("ipc-message",(event)=>{
+	console.log(event.args[0]);
 	if(event.channel==="min_play"){
 		setMiniplayer(event.args[0]);
 	}
@@ -30,7 +30,8 @@ function openMiniPlayer(){
 
 function setMiniplayer(details){
 	//set miniplayer elements
-	document.getElementsByClassName("mini-img")[0].src= details.img_url;
+	document.getElementsByClassName("min-img")[0].src= details.img_url;
+	document.getElementsByClassName("track-details")[0].innerHTML = details.title;
 }
 
 function minimizeWin(){

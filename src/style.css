@@ -14,7 +14,7 @@ html,body{
 	transform: translate(-50%,-50%)
 }
 
-.play-controls,.song-options{
+.play-controls,.song-opts{
 	display: flex;
 	justify-content: space-between;
 }
@@ -30,10 +30,24 @@ html,body{
 	width: 100%;
 }
 
-.mini-img{
-	height: 200px;
-	width: 200px;
+.min-details{
+	display: flex;
+	height: 70px;
+	width: 100%;
 }
+
+.min-details img{
+	height: 70px;
+	width : 70px;
+}
+
+.min-details p{
+	width: 300px;
+	margin: 0;
+	padding: 10px 20px 10px 20px;
+	background-color: #CCCCCC;
+}
+
 .content{
 	height: 100%;
 	width: 100%;
@@ -80,6 +94,10 @@ html,body{
 	height: 100%;
 }
 
+#min-player{
+	margin-right: 20px;
+}
+
 #wview{
 	flex: 1 1 auto;
 }
@@ -94,103 +112,26 @@ html,body{
 	padding: 0;
 }
 
-.win-btns button:before,
-.win-btns button:after {
-	top: 30%;
-	right: 30%;
-	bottom: 30%;
-	left: 30%;
-	content: "";
-	position: absolute;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 0 0 3px 0;
+.win-btns button{
+	color: #CCCCCC;
 }
 
 .win-btns button:hover{
-	 background-color: #CCCCCC;
-}
-
-#win-min:before {
-	border-bottom-width: 3px;
-}
-
-#win-max:before {
-	border-width: 1px 1px 3px 1px;
-}
-
-#win-close:before,
-#win-close:after {
-	bottom: 50%;
-	top: 50%;
+	color: #333333;
+	background-color: #CCCCCC
 }
 
 #win-close:hover{
 	background-color: #E04343;
+	color: white;
 }
 
-.win-btns button:hover:after,
-.win-btns button:hover:before {
-	border-color: #333333;
+
+.nav-btns button{
+	color: #CCCCCC;
 }
 
-#win-close:hover:after,
-#win-close:hover:before {
-	border-color: #FFFFFF;
-}
-
-#win-close:before{
-	transform: rotate(45deg);
-}
-
-#win-close:after{
-	transform: rotate(-45deg);
-}
-
-#back-nav:before{
-	position: absolute;
-    top: 30%;
-	bottom: 30%;
-	right: 30%;
-	left: 30%;
-    content: "";
-    border-left: 3px solid #CCCCCC;
-    border-top: 3px solid #CCCCCC;
-    transform: rotate(-45deg);
-}
-
-#back-nav:hover::before,#forw-nav:hover::before{
-	border-color: #333333;
-}
-
-#back-nav:hover,#forw-nav:hover{
-	background-color: #CCCCCC;
-}
-
-#forw-nav:before{
-	position: absolute;
-    top: 30%;
-	bottom: 30%;
-	right: 30%;
-	left: 30%;
-    content: "";
-    border-right: 3px solid #CCCCCC;
-    border-top: 3px solid #CCCCCC;
-    transform: rotate(45deg);
-}
-
-#reload-nav{
-	background-color: #CCCCCC;
-	-webkit-mask-image: url("./assets/refresh.svg");
-	-webkit-mask-repeat: no-repeat;
-	-webkit-mask-position: center;
-	padding: 0;
-}
-
-#reload-nav:hover{
-	background-color: #CCCCCC;
-	background-image: url("./assets/refresh.svg");
-	-webkit-mask-image: none;
-	background-repeat: no-repeat;
-	background-position: center;
+.nav-btns button:hover{
+	color: #333333;
+	background-color: #CCCCCC
 }
