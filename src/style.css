@@ -5,6 +5,10 @@ html,body{
 	overflow: hidden;
 }
 
+*{
+	box-sizing: border-box;
+}
+
 #splash-img{
 	position: absolute;
 	height: 150px;
@@ -42,10 +46,48 @@ html,body{
 }
 
 .min-details p{
+	font-family: "Lato" , sans-serif;
 	width: 300px;
 	margin: 0;
 	padding: 10px 20px 10px 20px;
 	background-color: #CCCCCC;
+}
+
+.min-btns{
+	width: 370px;
+	display: flex;
+	height: 50px;
+	background: #292929;
+}
+
+.min-btns button{
+	flex-grow: 1;
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.min-btns button i{
+	color: white;
+}
+
+.activated i{
+	color: #FF5500 !important;
+}
+
+.min-footer{
+	padding: 8px;
+	text-align: center;
+	width: 370px;
+	height: 30px;
+}
+
+.min-footer p{
+	margin: 0;
+	font-family: "Lato",sans-serif;
+	font-size: 12px;
+	color: #CCCCCC;
 }
 
 .content{

@@ -51,15 +51,15 @@ function createWindow() {
  */
 function registerShorts() {
 	globalShortcut.register("MediaNextTrack", () => {
-		win.webContents.send("shortCut", "nextTrack");
+		win.webContents.send("shortCut", "nextClicked");
 	});
 
 	globalShortcut.register("MediaPreviousTrack", () => {
-		win.webContents.send("shortCut", "prevTrack");
+		win.webContents.send("shortCut", "prevClicked");
 	});
 
 	globalShortcut.register("MediaPlayPause", () => {
-		win.webContents.send("shortCut", "playTrack");
+		win.webContents.send("shortCut", "playClicked");
 	});
 
 	globalShortcut.register("MediaStop", () => {
@@ -69,12 +69,12 @@ function registerShorts() {
 
 	globalShortcut.register("CommandOrControl+3", () => {
 		//repeat toggle
-		win.webContents.send("shortCut", "likeTrack");
+		win.webContents.send("shortCut", "likeClicked");
 	});
 
 	globalShortcut.register("CommandOrControl+4", () => {
 		//like here
-		win.webContents.send("shortCut", "repeatTrack");
+		win.webContents.send("shortCut", "repeatClicked");
 	});
 
 }
@@ -94,7 +94,7 @@ function clearCookies() {
 }
 
 ipcMain.on("mini_player", () => {
-	win.setSize(600, 600);
+	win.setSize(370,150);
 	positionWin();
 });
 

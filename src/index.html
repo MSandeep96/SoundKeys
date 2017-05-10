@@ -1,7 +1,7 @@
 <head>
 	<title>Some title</title>
 	<link rel="stylesheet" href="style.css">
-	<script src="https://use.fontawesome.com/778f375ed0.js"></script>
+	<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -46,20 +46,28 @@
 	</div>
 	<div class="mini-player" id="min-play">
 		<div class="min-details">
-			<img class="min-img" src="./assets/icon.png"/>
+			<img class="min-img" src="./assets/icon.png" />
 			<p class="track-details">Track details</p>
 		</div>
-		<div class="min-bot">
-			<div class="min-play-controls">
-				<button class="pc-prev" onclick="prevClicked()">Prev</button>
-				<button class="pc-play" onclick="playClicked()">Play</button>
-				<button class="pc-next" onclick="nextClicked()">Next</button>
-			</div>
-			<div class="min-song-opts">
-				<button class="so-like" onclick="likeClicked()">Like</button>
-				<button class="so-repeat" onclick="repeatClicked()">Repeat</button>
-				<button class="so-web" onclick="webClicked()">Maxim</button>
-			</div>
+		<div class="min-btns">
+			<button class="pc-play" onclick="playClicked()">
+				<i class="fa fa-play" aria-hidden="true"></i>
+			</button>
+			<button class="pc-prev" onclick="prevClicked()">
+				<i class="fa fa-backward" aria-hidden="true"></i>
+			</button>
+			<button class="pc-next" onclick="nextClicked()">
+				<i class="fa fa-forward" aria-hidden="true"></i>
+			</button>
+			<button class="so-like" onclick="likeClicked()">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+			</button>
+			<button class="so-repeat" onclick="repeatClicked()">
+				<i class="fa fa-repeat" aria-hidden="true"></i>
+			</button>
+			<button class="so-web" onclick="webClicked()">
+				<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+			</button>
 		</div>
 		<div class="min-footer">
 			<p>SoundKeys</p>

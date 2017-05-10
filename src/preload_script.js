@@ -3,6 +3,10 @@ const { ipcRenderer } = require("electron");
 //Mutation observer
 var observer;
 
+//To hide notifications
+var Notification = function(){};
+window.Notification = Notification;
+
 ipcRenderer.on("mini_player", (event, arg) => {
 
 	//set present title of track
@@ -27,6 +31,8 @@ function sendTrackDetails() {
 	playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
 
 	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
+
+	playerState.is_playing = document.getElementsByClassName("playing").length > 0;
 
 	ipcRenderer.sendToHost("min_play", playerState);
 }
