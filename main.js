@@ -1,10 +1,11 @@
 const electron = require("electron");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow ,Tray} = require("electron");
 const path = require("path");
 const url = require("url");
 const { ipcMain, globalShortcut } = require("electron");
 
 let win;
+let tray;
 
 app.on("ready", () => {
 	createWindow();
@@ -94,11 +95,22 @@ function clearCookies() {
 }
 
 ipcMain.on("mini_player", () => {
+	win.setSkipTaskbar(true);
+	setUpTray();
 	win.setSize(370,150);
 	positionWin();
 });
 
+function setUpTray(){
+	tray = new Tray("./src/assets/icon.png");
+	tray.on("click",()=>{
+		win.isVisible()? win.hide() : win.show();
+	});
+}
+
 ipcMain.on("web_player",()=>{
+	tray.destroy();
+	win.setSkipTaskbar(false);
 	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 	win.setSize(width, height);
 	win.setPosition(0,0);
