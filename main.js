@@ -27,6 +27,7 @@ function createWindow() {
 		frame: false,
 		width: width,
 		height: height,
+		icon: "./icon.ico",
 		backgroundColor: "#333333",
 		title: "Soundkeys",
 		autoHideMenuBar: true
@@ -102,7 +103,7 @@ ipcMain.on("mini_player", () => {
 });
 
 function setUpTray(){
-	tray = new Tray("./src/assets/icon.png");
+	tray = new Tray("./icon.ico");
 	tray.on("click",()=>{
 		win.isVisible()? win.hide() : win.show();
 	});
