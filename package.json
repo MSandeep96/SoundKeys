@@ -1,11 +1,19 @@
 {
   "name": "soundkeys",
   "version": "1.1.0",
-  "description": "The SoundCloud wrapped in Electron.",
-  "main": "index.js",
+  "description": "Souncloud delivered in a wrapper with a mini player 💎.",
+  "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "test": "eslint ."
+    "test": "eslint .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build":{
+    "appId": "com.msandeep96.soundkeys",
+    "mac": {
+      "category": "public.app-category.music"
+    }
   },
   "author": "MSandeep96",
   "license": "MIT",
