@@ -11,6 +11,12 @@ ipcRenderer.on("mini_player", (event, arg) => {
 
 	//set present title of track
 	var target = document.getElementsByClassName("playbackSoundBadge")[0];
+	console.log(target);
+	console.log(target.children.length);
+	if(!target || target.children.length==0){
+		ipcRenderer.sendToHost("no-play-stuff");
+		return;
+	}
 	observer = new MutationObserver(sendTrackDetails);
 	var config = { characterData: true,childList: true };
 	observer.observe(target, config);
