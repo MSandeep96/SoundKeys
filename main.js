@@ -24,12 +24,9 @@ app.on("window-all-closed", () => {
  * Creates our main window
  */
 function createWindow() {
-	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 
 	win = new BrowserWindow({
 		frame: false,
-		width: width,
-		height: height,
 		icon: "./icon.ico",
 		backgroundColor: "#333333",
 		title: "Soundkeys",
@@ -48,8 +45,6 @@ function createWindow() {
 	win.webContents.on("new-window", function (event, url, frameName, disposition, windowOptions) {
 		windowOptions["node-integration"] = false;
 	});
-
-	win.webContents.openDevTools("undocked");
 }
 
 /**
@@ -92,13 +87,6 @@ function positionWin() {
 	positioner.move(pos);
 }
 
-// TODO: Remove if not required
-function clearCookies() {
-	electron.session.defaultSession.clearStorageData([], () => {
-		console.log("Wazzap");
-	});
-}
-
 ipcMain.on("mini_player", () => {
 	win.setSkipTaskbar(true);
 	setUpTray();
@@ -111,11 +99,9 @@ function setUpTray() {
 		{ label: "Quit", role: "quit" }
 	]);
 	tray = new Tray("./icon.ico");
-	console.log("Hello");
 	tray.setToolTip("Shows the mini-player");
 	tray.setContextMenu(contextMenu);
 	tray.on("click", () => {
-		console.log("here");
 		win.isVisible() ? win.hide() : win.show();
 	});
 	tray.on("double-click",()=>{

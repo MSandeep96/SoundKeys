@@ -6,10 +6,8 @@ var oldNotify = window.Notification;
 //To hide notifications
 window.Notification = function (title, options) {
 	if(remote.getCurrentWindow().isFocused()){
-		console.log("Woah");
 		return;
 	}
-	console.log("here");
 	options["silent"] = true;
 	new oldNotify(title,options);
 };
@@ -34,7 +32,6 @@ ipcRenderer.on("mini_player", (event, arg) => {
 });
 
 function sendTrackDetails(inMiniPlayerState) {
-	console.log(inMiniPlayerState);
 	//send title avatar like and repeat status to host
 	var playerState = {};
 
@@ -100,7 +97,6 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 ipcRenderer.on("repeatTrack", (event, arg) => {
 	var repeatBtn = document.getElementsByClassName("repeatControl")[0];
 	repeatBtn.click();
-	console.log(Notification);
 	if (repeatBtn.className.includes("m-none")) {
 		Notification("Repeat : Disabled", {
 			body: "Repeat has been disabled"

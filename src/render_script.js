@@ -8,7 +8,6 @@ ipcRenderer.on("shortCut", (event, arg) => {
 
 wbView.addEventListener("did-finish-load", () => {
 	document.getElementById("splash-img").style.display = "none";
-	wbView.openDevTools();
 });
 
 wbView.addEventListener("page-title-updated", () => {
@@ -99,7 +98,6 @@ function nextClicked() {
 function playClicked() {
 	var play = document.getElementsByClassName("pc-play")[0].children[0];
 	var is_playing = play.classList.contains("fa-pause");
-	console.log(is_playing);
 	play.classList.add(is_playing ? "fa-play" : "fa-pause");
 	play.classList.remove(is_playing ? "fa-pause" : "fa-play");
 	wbView.send("playTrack");
