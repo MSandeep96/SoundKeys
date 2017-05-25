@@ -1,30 +1,40 @@
 const { ipcRenderer } = require("electron");
-
 //Mutation observer
 var observer;
 
 //To hide notifications
-var Notification = function(){};
+var Notification = function (title, options) {
+	// Change config options
+	console.log(title,options);
+	var obj = {title,options};
+	console.log(obj);
+	ipcRenderer.sendToHost("notify",obj);
+	
+};
+
 window.Notification = Notification;
+
+/**
+ * When in mini player mode, we add a mutation observer which handles track changes.
+ */
 
 ipcRenderer.on("mini_player", (event, arg) => {
 
 	//set present title of track
 	var target = document.getElementsByClassName("playbackSoundBadge")[0];
-	console.log(target);
-	console.log(target.children.length);
-	if(!target || target.children.length==0){
+	if (!target || target.children.length == 0) {
 		ipcRenderer.sendToHost("no-play-stuff");
 		return;
 	}
 	observer = new MutationObserver(sendTrackDetails);
-	var config = { characterData: true,childList: true };
+	var config = { characterData: true, childList: true };
 	observer.observe(target, config);
 
-	sendTrackDetails();
+	sendTrackDetails(false);
 });
 
-function sendTrackDetails() {
+function sendTrackDetails(inMiniPlayerState) {
+	console.log(inMiniPlayerState);
 	//send title avatar like and repeat status to host
 	var playerState = {};
 
@@ -39,8 +49,13 @@ function sendTrackDetails() {
 	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
 
 	playerState.is_playing = document.getElementsByClassName("playing").length > 0;
-
-	ipcRenderer.sendToHost("min_play", playerState);
+	
+	if(!inMiniPlayerState){
+		ipcRenderer.sendToHost("min_play", playerState);
+	}
+	else{
+		ipcRenderer.sendToHost("track_changed",playerState);
+	}
 }
 
 ipcRenderer.on("web_player", (event, arg) => {

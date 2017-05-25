@@ -2,14 +2,8 @@ const { ipcRenderer } = require("electron");
 
 var wbView = document.getElementById("wview");
 
-var musicPlayed = false;
-
 ipcRenderer.on("shortCut", (event, arg) => {
 	eval(arg + "()");
-});
-
-wbView.addEventListener("no-play-stuff",()=>{
-	alert("Nothing to play here","Soundkeys");
 });
 
 wbView.addEventListener("did-finish-load", () => {
@@ -22,28 +16,31 @@ wbView.addEventListener("page-title-updated", () => {
 });
 
 wbView.addEventListener("ipc-message", (event) => {
-	if (event.channel === "min_play") {
-		setMiniplayer(event.args[0]);
-	}else if(event.channel === "no-play-stuff"){
-		alert("Nothing to play here","Soundkeys");
+	switch (event.channel) {
+		case "min_play":
+			setMiniplayer(event.args[0], true);
+			break;
+		case "notify":
+			ipcRenderer.send("notify", event.args[0]);
+			break;
+		case "track_changed":
+			setMiniplayer(event.args[0], false);
+			break;
+		case "no-play-stuff":
+			alert("Please click on any play atleast once", "Soundkeys");
 	}
-});
-
-wbView.addEventListener("media-started-playing",(event)=>{
-	musicPlayed = true;
 });
 
 function openMiniPlayer() {
-	if(!musicPlayed){
-		alert("Press play on any song before launching mini player","Soundkeys");
-		return;
-	}
 	wbView.send("mini_player");
 }
 
-function setMiniplayer(details) {
-	//set miniplayer elements
-	ipcRenderer.send("mini_player");
+function setMiniplayer(details, movingToMiniState) {
+	//set miniplayer in main process
+	if(movingToMiniState)
+		ipcRenderer.send("mini_player");
+
+	// update the view
 	document.getElementById("sc-full").style.display = "none";
 	document.getElementById("min-play").style.display = "inline";
 	document.getElementsByClassName("min-img")[0].src = details.img_url;

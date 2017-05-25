@@ -102,10 +102,10 @@ html,body{
 }
 
 .title-img{
-	height: 30px;
-	width: 30px;
-	padding: 5px;
-	margin: auto;
+	height: 26px;
+	width: 26px;
+	padding: 4px;
+	margin: 4px 3px 0 4px;
 	box-sizing: border-box;
 }
 

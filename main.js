@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow ,Tray} = require("electron");
+const { app, BrowserWindow, Tray } = require("electron");
 const path = require("path");
 const url = require("url");
 const { ipcMain, globalShortcut } = require("electron");
@@ -45,6 +45,7 @@ function createWindow() {
 	win.webContents.on("new-window", function (event, url, frameName, disposition, windowOptions) {
 		windowOptions["node-integration"] = false;
 	});
+
 	win.webContents.openDevTools("undocked");
 }
 
@@ -90,7 +91,7 @@ function positionWin() {
 
 // TODO: Remove if not required
 function clearCookies() {
-	electron.session.defaultSession.clearStorageData([],()=> {
+	electron.session.defaultSession.clearStorageData([], () => {
 		console.log("Wazzap");
 	});
 }
@@ -98,23 +99,23 @@ function clearCookies() {
 ipcMain.on("mini_player", () => {
 	win.setSkipTaskbar(true);
 	setUpTray();
-	win.setSize(370,150);
+	win.setSize(370, 150);
 	positionWin();
 });
 
-function setUpTray(){
+function setUpTray() {
 	tray = new Tray("./icon.ico");
-	tray.on("click",()=>{
-		win.isVisible()? win.hide() : win.show();
+	console.log("Hello");
+	tray.on("click", () => {
+		win.isVisible() ? win.hide() : win.show();
 	});
 }
 
-ipcMain.on("web_player",()=>{
+ipcMain.on("web_player", () => {
 	tray.destroy();
 	win.setSkipTaskbar(false);
-	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
-	win.setSize(width, height);
-	win.setPosition(0,0);
+	win.setSize(800, 600);
+	win.setPosition(0, 0);
 	win.maximize();
 });
 
@@ -132,4 +133,8 @@ ipcMain.on("max_win", () => {
 
 ipcMain.on("close_win", () => {
 	win.close();
+});
+
+ipcMain.on("notify", (event, arg) => {
+	
 });

@@ -9,7 +9,7 @@
     "pack": "build --dir",
     "dist": "build"
   },
-  "build":{
+  "build": {
     "appId": "com.msandeep96.soundkeys",
     "mac": {
       "category": "public.app-category.music"
