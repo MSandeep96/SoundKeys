@@ -1,6 +1,7 @@
 <head>
 	<title>Some title</title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -9,19 +10,33 @@
 		<div class="title-bar">
 
 			<div class="nav-btns">
-				<button id="back-nav" onclick="backNav()"></button>
-				<button id="forw-nav" onclick="forwNav()"></button>
-				<button id="reload-nav" onclick="reloadNav()"></button>
+				<button id="back-nav" onclick="backNav()">
+					<i class="fa fa-arrow-left" aria-hidden="true"></i>
+				</button>
+				<button id="forw-nav" onclick="forwNav()">
+					<i class="fa fa-arrow-right" aria-hidden="true"></i>
+				</button>
+				<button id="reload-nav" onclick="reloadNav()">
+					<i class="fa fa-refresh" aria-hidden="true"></i>
+				</button>
 			</div>
 			<div class="title">
 				<img class="title-img" src="./assets/icon.png" />
 				<p id="title-text">Soundkeys</p>
 			</div>
 			<div class="win-btns">
-				<button id="min-player" onclick="openMiniPlayer()"></button>
-				<button id="win-min" onclick="minimizeWin()"></button>
-				<button id="win-max" onclick="maximizeWin()"></button>
-				<button id="win-close" onclick="closeWin()"></button>
+				<button id="min-player" onclick="openMiniPlayer()">
+					<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+				</button>
+				<button id="win-min" onclick="minimizeWin()">
+					<i class="fa fa-window-minimize" aria-hidden="true"></i>
+				</button>
+				<button id="win-max" onclick="maximizeWin()">
+					<i class="fa fa-window-maximize" aria-hidden="true"></i>
+				</button>
+				<button id="win-close" onclick="closeWin()">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
 			</div>
 
 		</div>
@@ -30,10 +45,32 @@
 		<img id="splash-img" draggable="false" src="./assets/icon.png" />
 	</div>
 	<div class="mini-player" id="min-play">
-		<img class="mini-img" src="#"/>
-		<div class="play-controls">
+		<div class="min-details">
+			<img class="min-img" src="./assets/icon.png" />
+			<p class="track-details">Track details</p>
 		</div>
-		<div class="song-opts">
+		<div class="min-btns">
+			<button class="pc-play" onclick="playClicked()">
+				<i class="fa fa-play" aria-hidden="true"></i>
+			</button>
+			<button class="pc-prev" onclick="prevClicked()">
+				<i class="fa fa-backward" aria-hidden="true"></i>
+			</button>
+			<button class="pc-next" onclick="nextClicked()">
+				<i class="fa fa-forward" aria-hidden="true"></i>
+			</button>
+			<button class="so-like" onclick="likeClicked()">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+			</button>
+			<button class="so-repeat" onclick="repeatClicked()">
+				<i class="fa fa-repeat" aria-hidden="true"></i>
+			</button>
+			<button class="so-web" onclick="webClicked()">
+				<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="min-footer">
+			<p>SoundKeys</p>
 		</div>
 	</div>
 	<script src="render_script.js"></script>

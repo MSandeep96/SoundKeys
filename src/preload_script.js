@@ -1,67 +1,109 @@
-const {ipcRenderer} = require("electron");
+const { ipcRenderer,remote } = require("electron");
+//Mutation observer
+var observer;
 
-/*
-document.addEventListener("DOMContentLoaded",()=>{
-	console.log("sending ");
-	ipcRenderer.sendToHost("hello","howdy");
+var oldNotify = window.Notification;
+//To hide notifications
+window.Notification = function (title, options) {
+	if(remote.getCurrentWindow().isFocused()){
+		return;
+	}
+	options["silent"] = true;
+	new oldNotify(title,options);
+};
+
+/**
+ * When in mini player mode, we add a mutation observer which handles track changes.
+ */
+
+ipcRenderer.on("mini_player", (event, arg) => {
+
+	//set present title of track
+	var target = document.getElementsByClassName("playbackSoundBadge")[0];
+	if (!target || target.children.length == 0) {
+		ipcRenderer.sendToHost("no-play-stuff");
+		return;
+	}
+	observer = new MutationObserver(sendTrackDetails);
+	var config = { characterData: true, childList: true };
+	observer.observe(target, config);
+
+	sendTrackDetails(false);
 });
 
-ipcRenderer.on("webu",(event,arg)=>{
-	var a = document.getElementsByClassName("playControls__play")[0];
-	console.log(a);
-	a.click();
-});
-*/
+function sendTrackDetails(inMiniPlayerState) {
+	//send title avatar like and repeat status to host
+	var playerState = {};
 
-ipcRenderer.on("nextTrack",(event,arg)=>{
+	playerState.title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[1].innerHTML;
+
+	var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
+	var imageStyle = window.getComputedStyle(songArt, false);
+	playerState.img_url = imageStyle.backgroundImage.slice(5, -2);
+
+	playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
+
+	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
+
+	playerState.is_playing = document.getElementsByClassName("playing").length > 0;
+	
+	if(!inMiniPlayerState){
+		ipcRenderer.sendToHost("min_play", playerState);
+	}
+	else{
+		ipcRenderer.sendToHost("track_changed",playerState);
+	}
+}
+
+ipcRenderer.on("web_player", (event, arg) => {
+	observer.disconnect();
+});
+
+ipcRenderer.on("nextTrack", (event, arg) => {
 	document.getElementsByClassName("playControls__next")[0].click();
 });
 
 
-ipcRenderer.on("prevTrack",(event,arg)=>{
+ipcRenderer.on("prevTrack", (event, arg) => {
 	document.getElementsByClassName("playControls__prev")[0].click();
 });
 
 
-ipcRenderer.on("playTrack",(event,arg)=>{
+ipcRenderer.on("playTrack", (event, arg) => {
 	document.getElementsByClassName("playControls__play")[0].click();
 });
 
 
-ipcRenderer.on("likeTrack",(event,arg)=>{
+ipcRenderer.on("likeTrack", (event, arg) => {
 	var likeBtn = document.getElementsByClassName("playbackSoundBadge__like")[0];
 	likeBtn.click();
 	var title = document.getElementsByClassName("playbackSoundBadge__title")[0].title;
 	var imageUrl = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0].style.backgroundImage;
-	imageUrl = imageUrl.substring(5,imageUrl.length-2);
-	if(likeBtn.className.includes("sc-button-selected")){
-		new Notification("Liked",{
-			body:title,
-			silent:true,
-			icon:imageUrl
+	imageUrl = imageUrl.substring(5, imageUrl.length - 2);
+	if (likeBtn.className.includes("sc-button-selected")) {
+		Notification("Liked", {
+			body: title,
+			icon: imageUrl
 		});
-	}else{
-		new Notification("Disliked",{
-			body:title,
-			silent:true,
-			icon:imageUrl
+	} else {
+		Notification("Disliked", {
+			body: title,
+			icon: imageUrl
 		});
 	}
 });
 
 
-ipcRenderer.on("repeatTrack",(event,arg)=>{
+ipcRenderer.on("repeatTrack", (event, arg) => {
 	var repeatBtn = document.getElementsByClassName("repeatControl")[0];
 	repeatBtn.click();
-	if(repeatBtn.className.includes("m-none")){
-		new Notification("Repeat : Disabled",{
-			body:"Repeat has been disabled",
-			silent:true
+	if (repeatBtn.className.includes("m-none")) {
+		Notification("Repeat : Disabled", {
+			body: "Repeat has been disabled"
 		});
-	}else{
-		new Notification("Repeat : Enabled",{
-			body:"Repeat has been enabled",
-			silent:true
+	} else {
+		Notification("Repeat : Enabled", {
+			body: "Repeat has been enabled"
 		});
 	}
 });

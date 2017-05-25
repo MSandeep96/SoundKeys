@@ -5,6 +5,10 @@ html,body{
 	overflow: hidden;
 }
 
+*{
+	box-sizing: border-box;
+}
+
 #splash-img{
 	position: absolute;
 	height: 150px;
@@ -14,11 +18,76 @@ html,body{
 	transform: translate(-50%,-50%)
 }
 
+.play-controls,.song-opts{
+	display: flex;
+	justify-content: space-between;
+}
+
+.play-controls button{
+	width: 65px;
+	height: 20px;
+}
+
 .mini-player{
-	position: absolute;
 	display: none;
-	bottom: 0%;
-	right: 0%;
+	height: 100%;
+	width: 100%;
+}
+
+.min-details{
+	display: flex;
+	height: 70px;
+	width: 100%;
+}
+
+.min-details img{
+	height: 70px;
+	width : 70px;
+}
+
+.min-details p{
+	font-family: "Lato" , sans-serif;
+	width: 300px;
+	margin: 0;
+	padding: 10px 20px 10px 20px;
+	background-color: #CCCCCC;
+}
+
+.min-btns{
+	width: 370px;
+	display: flex;
+	height: 50px;
+	background: #292929;
+}
+
+.min-btns button{
+	flex-grow: 1;
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.min-btns button i{
+	color: white;
+}
+
+.activated i{
+	color: #FF5500 !important;
+}
+
+.min-footer{
+	padding: 8px;
+	text-align: center;
+	width: 370px;
+	height: 30px;
+}
+
+.min-footer p{
+	margin: 0;
+	font-family: "Lato",sans-serif;
+	font-size: 12px;
+	color: #CCCCCC;
 }
 
 .content{
@@ -33,10 +102,10 @@ html,body{
 }
 
 .title-img{
-	height: 30px;
-	width: 30px;
-	padding: 5px;
-	margin: auto;
+	height: 26px;
+	width: 26px;
+	padding: 4px;
+	margin: 4px 3px 0 4px;
 	box-sizing: border-box;
 }
 
@@ -67,6 +136,10 @@ html,body{
 	height: 100%;
 }
 
+#min-player{
+	margin-right: 20px;
+}
+
 #wview{
 	flex: 1 1 auto;
 }
@@ -81,103 +154,26 @@ html,body{
 	padding: 0;
 }
 
-.win-btns button:before,
-.win-btns button:after {
-	top: 30%;
-	right: 30%;
-	bottom: 30%;
-	left: 30%;
-	content: "";
-	position: absolute;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 0 0 3px 0;
+.win-btns button{
+	color: #CCCCCC;
 }
 
 .win-btns button:hover{
-	 background-color: #CCCCCC;
-}
-
-#win-min:before {
-	border-bottom-width: 3px;
-}
-
-#win-max:before {
-	border-width: 1px 1px 3px 1px;
-}
-
-#win-close:before,
-#win-close:after {
-	bottom: 50%;
-	top: 50%;
+	color: #333333;
+	background-color: #CCCCCC
 }
 
 #win-close:hover{
 	background-color: #E04343;
+	color: white;
 }
 
-.win-btns button:hover:after,
-.win-btns button:hover:before {
-	border-color: #333333;
+
+.nav-btns button{
+	color: #CCCCCC;
 }
 
-#win-close:hover:after,
-#win-close:hover:before {
-	border-color: #FFFFFF;
-}
-
-#win-close:before{
-	transform: rotate(45deg);
-}
-
-#win-close:after{
-	transform: rotate(-45deg);
-}
-
-#back-nav:before{
-	position: absolute;
-    top: 30%;
-	bottom: 30%;
-	right: 30%;
-	left: 30%;
-    content: "";
-    border-left: 3px solid #CCCCCC;
-    border-top: 3px solid #CCCCCC;
-    transform: rotate(-45deg);
-}
-
-#back-nav:hover::before,#forw-nav:hover::before{
-	border-color: #333333;
-}
-
-#back-nav:hover,#forw-nav:hover{
-	background-color: #CCCCCC;
-}
-
-#forw-nav:before{
-	position: absolute;
-    top: 30%;
-	bottom: 30%;
-	right: 30%;
-	left: 30%;
-    content: "";
-    border-right: 3px solid #CCCCCC;
-    border-top: 3px solid #CCCCCC;
-    transform: rotate(45deg);
-}
-
-#reload-nav{
-	background-color: #CCCCCC;
-	-webkit-mask-image: url("./assets/refresh.svg");
-	-webkit-mask-repeat: no-repeat;
-	-webkit-mask-position: center;
-	padding: 0;
-}
-
-#reload-nav:hover{
-	background-color: #CCCCCC;
-	background-image: url("./assets/refresh.svg");
-	-webkit-mask-image: none;
-	background-repeat: no-repeat;
-	background-position: center;
+.nav-btns button:hover{
+	color: #333333;
+	background-color: #CCCCCC
 }
