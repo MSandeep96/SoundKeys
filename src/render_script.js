@@ -27,7 +27,7 @@ wbView.addEventListener("ipc-message", (event) => {
 			setMiniplayer(event.args[0], false);
 			break;
 		case "no-play-stuff":
-			alert("Please click on any play atleast once", "Soundkeys");
+			alert("Play panel must be exist for mini-player", "Soundkeys");
 	}
 });
 

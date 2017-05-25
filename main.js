@@ -2,7 +2,7 @@ const electron = require("electron");
 const { app, BrowserWindow, Tray } = require("electron");
 const path = require("path");
 const url = require("url");
-const { ipcMain, globalShortcut } = require("electron");
+const { ipcMain, globalShortcut, Menu } = require("electron");
 
 let win;
 let tray;
@@ -14,6 +14,9 @@ app.on("ready", () => {
 
 app.on("window-all-closed", () => {
 	win = null;
+	if(!tray.isDestoryed()){
+		tray.destroy();
+	}
 	app.quit();
 });
 
@@ -104,10 +107,23 @@ ipcMain.on("mini_player", () => {
 });
 
 function setUpTray() {
+	const contextMenu = Menu.buildFromTemplate([
+		{ label: "Quit", role: "quit" }
+	]);
 	tray = new Tray("./icon.ico");
 	console.log("Hello");
+	tray.setToolTip("Shows the mini-player");
+	tray.setContextMenu(contextMenu);
 	tray.on("click", () => {
+		console.log("here");
 		win.isVisible() ? win.hide() : win.show();
+	});
+	tray.on("double-click",()=>{
+		// (╯°□°）╯︵ ┻━┻
+		win.show();
+	});
+	tray.on("right-click", () => {
+		tray.popUpContextMenu();
 	});
 }
 
@@ -136,5 +152,5 @@ ipcMain.on("close_win", () => {
 });
 
 ipcMain.on("notify", (event, arg) => {
-	
+
 });

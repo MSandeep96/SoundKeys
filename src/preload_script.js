@@ -1,18 +1,18 @@
-const { ipcRenderer } = require("electron");
+const { ipcRenderer,remote } = require("electron");
 //Mutation observer
 var observer;
 
+var oldNotify = window.Notification;
 //To hide notifications
-var Notification = function (title, options) {
-	// Change config options
-	console.log(title,options);
-	var obj = {title,options};
-	console.log(obj);
-	ipcRenderer.sendToHost("notify",obj);
-	
+window.Notification = function (title, options) {
+	if(remote.getCurrentWindow().isFocused()){
+		console.log("Woah");
+		return;
+	}
+	console.log("here");
+	options["silent"] = true;
+	new oldNotify(title,options);
 };
-
-window.Notification = Notification;
 
 /**
  * When in mini player mode, we add a mutation observer which handles track changes.
@@ -84,15 +84,13 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 	var imageUrl = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0].style.backgroundImage;
 	imageUrl = imageUrl.substring(5, imageUrl.length - 2);
 	if (likeBtn.className.includes("sc-button-selected")) {
-		new Notification("Liked", {
+		Notification("Liked", {
 			body: title,
-			silent: true,
 			icon: imageUrl
 		});
 	} else {
-		new Notification("Disliked", {
+		Notification("Disliked", {
 			body: title,
-			silent: true,
 			icon: imageUrl
 		});
 	}
@@ -102,15 +100,14 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 ipcRenderer.on("repeatTrack", (event, arg) => {
 	var repeatBtn = document.getElementsByClassName("repeatControl")[0];
 	repeatBtn.click();
+	console.log(Notification);
 	if (repeatBtn.className.includes("m-none")) {
-		new Notification("Repeat : Disabled", {
-			body: "Repeat has been disabled",
-			silent: true
+		Notification("Repeat : Disabled", {
+			body: "Repeat has been disabled"
 		});
 	} else {
-		new Notification("Repeat : Enabled", {
-			body: "Repeat has been enabled",
-			silent: true
+		Notification("Repeat : Enabled", {
+			body: "Repeat has been enabled"
 		});
 	}
 });
