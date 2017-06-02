@@ -2,6 +2,7 @@ const { ipcRenderer,remote } = require("electron");
 //Mutation observer
 var observer;
 
+/*
 var oldNotify = window.Notification;
 //To hide notifications
 window.Notification = function (title, options) {
@@ -11,6 +12,7 @@ window.Notification = function (title, options) {
 	options["silent"] = true;
 	new oldNotify(title,options);
 };
+*/
 
 /**
  * When in mini player mode, we add a mutation observer which handles track changes.
@@ -83,12 +85,14 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 	if (likeBtn.className.includes("sc-button-selected")) {
 		Notification("Liked", {
 			body: title,
-			icon: imageUrl
+			icon: imageUrl,
+			silent: true
 		});
 	} else {
 		Notification("Disliked", {
 			body: title,
-			icon: imageUrl
+			icon: imageUrl,
+			silent : true
 		});
 	}
 });
@@ -99,11 +103,13 @@ ipcRenderer.on("repeatTrack", (event, arg) => {
 	repeatBtn.click();
 	if (repeatBtn.className.includes("m-none")) {
 		Notification("Repeat : Disabled", {
-			body: "Repeat has been disabled"
+			body: "Repeat has been disabled",
+			silent : true
 		});
 	} else {
 		Notification("Repeat : Enabled", {
-			body: "Repeat has been enabled"
+			body: "Repeat has been enabled",
+			silent : true
 		});
 	}
 });

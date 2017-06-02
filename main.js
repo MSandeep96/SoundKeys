@@ -7,7 +7,10 @@ const { ipcMain, globalShortcut, Menu } = require("electron");
 let win;
 let tray;
 
+let  iconPath;
+
 app.on("ready", () => {
+	iconPath = path.join(__dirname,"./icon.ico");
 	createWindow();
 	registerShorts();
 });
@@ -27,7 +30,7 @@ function createWindow() {
 
 	win = new BrowserWindow({
 		frame: false,
-		icon: "./icon.ico",
+		icon: iconPath,
 		backgroundColor: "#333333",
 		title: "Soundkeys",
 		autoHideMenuBar: true
@@ -98,7 +101,7 @@ function setUpTray() {
 	const contextMenu = Menu.buildFromTemplate([
 		{ label: "Quit", role: "quit" }
 	]);
-	tray = new Tray("./icon.ico");
+	tray = new Tray(iconPath);
 	tray.setToolTip("Shows the mini-player");
 	tray.setContextMenu(contextMenu);
 	tray.on("click", () => {

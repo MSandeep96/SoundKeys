@@ -1,12 +1,10 @@
-# <img src='./main_proc/icon.png' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
+# <img src='./icon.ico' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
 
 The SoundCloud website wrapped in Electron with shortcuts for a native experience.
 
-Supports Media keys and a few other shortcuts.  
-User can further edit the shortcuts to his desire.  
-(Setting->Edit Shortcuts)
+Includes a mini-player with minimal controls as well.
 
-Default shortcuts included are: 😎 
+Default shortcuts included are:
 
 Global shortcuts :
 
@@ -17,14 +15,6 @@ Global shortcuts :
 | `MediaPlayPause`               | Play/Pause Track |
 | `Ctrl+4`                       | Repeat Toggle    | 
 | `Ctrl+3`                       | Like Toggle      |
-
-When window is visible :
- 
-| Keys                           | Actions          |
-|:------------------------------:|:----------------:|
-| `MediaNextTrack or Ctrl+N`     | Next Track       |
-| `MediaPreviousTrack or Ctrl+P` | Previous Track   |
-| `MediaPlayPause or Space`      | Play/Pause Track |
 
 ## Notifications 
 
@@ -58,7 +48,7 @@ The app hasn't been tested on Linux or OSX. Please provide feedback if you did.
 
 Check the Projects tab for the roadmap. 😸
 
-##### Login issues: 😿
+##### Login issues: (Only Facebook)😿
 
 As Electron opens each window in a seperate process, login callbacks aren't triggered properly.  
 If the application stalls for you, reload the page and try to login again. (Sometimes twice)  
