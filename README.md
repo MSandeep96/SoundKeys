@@ -1,5 +1,7 @@
 # <img src='./icon.ico' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
 
+Soundkeys serves straight from Soundcloud. Benefit from the website's features and caching! 😼
+
 <img src='./ReadmeImages/Home.PNG'/>
 
 The SoundCloud website wrapped in Electron with shortcuts for a native experience.
