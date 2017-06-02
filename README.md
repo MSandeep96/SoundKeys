@@ -1,8 +1,14 @@
 # <img src='./icon.ico' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
 
+<img src='./ReadmeImages/Home.PNG'/>
+
 The SoundCloud website wrapped in Electron with shortcuts for a native experience.
 
+<img src='./ReadmeImages/Soundkeys.PNG'/>
+
 Includes a mini-player with minimal controls as well.
+
+<img src='./ReadmeImages/miniPlayer.PNG'/>
 
 Default shortcuts included are:
 
@@ -20,9 +26,9 @@ Global shortcuts :
 
 Get notified about your actions when the window is not visible. 💯  
 
-![Alt text](/Screenshots/likeClicked.PNG)
+![Alt text](/ReadmeImages/likeClicked.PNG)
 
-![Alt text](/Screenshots/repeatClicked.PNG)
+![Alt text](/ReadmeImages/repeatClicked.PNG)
 
 
 ### Install
