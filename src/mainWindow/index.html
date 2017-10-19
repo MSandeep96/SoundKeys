@@ -1,12 +1,13 @@
 <head>
 	<title>Some title</title>
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
 	<div class="content" id="sc-full">
 
+		<!-- Windows title bar and buttons  -->
 		<div class="title-bar">
 
 			<div class="nav-btns">
@@ -21,7 +22,7 @@
 				</button>
 			</div>
 			<div class="title">
-				<img class="title-img" src="./assets/icon.png" />
+				<img class="title-img" src="../assets/icon.png" />
 				<p id="title-text">Soundkeys</p>
 			</div>
 			<div class="win-btns">
@@ -41,37 +42,11 @@
 
 		</div>
 
+		<!-- Juicy stuff -->
 		<webview id="wview" src="https://soundcloud.com" allowpopups preload="./preload_script.js"></webview>
-		<img id="splash-img" draggable="false" src="./assets/icon.png" />
-	</div>
-	<div class="mini-player" id="min-play">
-		<div class="min-details">
-			<img class="min-img" src="./assets/icon.png" />
-			<p class="track-details">Track details</p>
-		</div>
-		<div class="min-btns">
-			<button class="pc-play" onclick="playClicked()">
-				<i class="fa fa-play" aria-hidden="true"></i>
-			</button>
-			<button class="pc-prev" onclick="prevClicked()">
-				<i class="fa fa-backward" aria-hidden="true"></i>
-			</button>
-			<button class="pc-next" onclick="nextClicked()">
-				<i class="fa fa-forward" aria-hidden="true"></i>
-			</button>
-			<button class="so-like" onclick="likeClicked()">
-				<i class="fa fa-heart" aria-hidden="true"></i>
-			</button>
-			<button class="so-repeat" onclick="repeatClicked()">
-				<i class="fa fa-repeat" aria-hidden="true"></i>
-			</button>
-			<button class="so-web" onclick="webClicked()">
-				<i class="fa fa-angle-double-up" aria-hidden="true"></i>
-			</button>
-		</div>
-		<div class="min-footer">
-			<p>SoundKeys</p>
-		</div>
+
+		<!-- Centered image on boot screen -->
+		<img id="splash-img" draggable="false" src="../assets/icon.png" />
 	</div>
 	<script src="render_script.js"></script>
 </body>

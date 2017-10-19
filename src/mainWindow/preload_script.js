@@ -1,4 +1,6 @@
-const { ipcRenderer,remote } = require("electron");
+const { ipcRenderer, remote } = require("electron");
+const IPC_EVENT = require("../../utils/IPC_EVENT");
+const WEB_VIEW_EVENT = require("./WEB_VIEW_EVENT");
 //Mutation observer
 var observer;
 
@@ -17,8 +19,7 @@ window.Notification = function (title, options) {
 /**
  * When in mini player mode, we add a mutation observer which handles track changes.
  */
-
-ipcRenderer.on("mini_player", (event, arg) => {
+ipcRenderer.on(IPC_EVENT.SHOW_MINI_PLAYER, (event, arg) => {
 
 	//set present title of track
 	var target = document.getElementsByClassName("playbackSoundBadge")[0];
@@ -37,23 +38,27 @@ function sendTrackDetails(inMiniPlayerState) {
 	//send title avatar like and repeat status to host
 	var playerState = {};
 
-	playerState.title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[1].innerHTML;
+	try {
+		playerState.title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[0].children[1].innerHTML;
 
-	var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
-	var imageStyle = window.getComputedStyle(songArt, false);
-	playerState.img_url = imageStyle.backgroundImage.slice(5, -2);
+		var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
+		var imageStyle = window.getComputedStyle(songArt, false);
+		playerState.img_url = imageStyle.backgroundImage.slice(5, -2);
 
-	playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
+		playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
 
-	playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
+		playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
 
-	playerState.is_playing = document.getElementsByClassName("playing").length > 0;
-	
-	if(!inMiniPlayerState){
-		ipcRenderer.sendToHost("min_play", playerState);
-	}
-	else{
-		ipcRenderer.sendToHost("track_changed",playerState);
+		playerState.is_playing = document.getElementsByClassName("playing").length > 0;
+
+		if (!inMiniPlayerState) {
+			ipcRenderer.sendToHost(WEB_VIEW_EVENT.MIN_PLAYER_BUTTON_CLICKED, playerState);
+		}
+		else {
+			ipcRenderer.sendToHost(WEB_VIEW_EVENT.TRACK_CHANGED_UPDATE, playerState);
+		}
+	} catch(e){
+		alert("Oops! Looks like Soundcloud updated their site. Please open an issue on the project site.", "Scraping failed!");
 	}
 }
 
@@ -69,7 +74,6 @@ ipcRenderer.on("nextTrack", (event, arg) => {
 ipcRenderer.on("prevTrack", (event, arg) => {
 	document.getElementsByClassName("playControls__prev")[0].click();
 });
-
 
 ipcRenderer.on("playTrack", (event, arg) => {
 	document.getElementsByClassName("playControls__play")[0].click();
@@ -92,7 +96,7 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 		Notification("Disliked", {
 			body: title,
 			icon: imageUrl,
-			silent : true
+			silent: true
 		});
 	}
 });
@@ -104,12 +108,12 @@ ipcRenderer.on("repeatTrack", (event, arg) => {
 	if (repeatBtn.className.includes("m-none")) {
 		Notification("Repeat : Disabled", {
 			body: "Repeat has been disabled",
-			silent : true
+			silent: true
 		});
 	} else {
 		Notification("Repeat : Enabled", {
 			body: "Repeat has been enabled",
-			silent : true
+			silent: true
 		});
 	}
 });

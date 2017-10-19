@@ -8,14 +8,14 @@
     "test": "eslint ."
   },
   "productName": "Soundkeys",
-  "icon" : "./icon.ico",
+  "icon": "./icon.ico",
   "author": "MSandeep96",
   "license": "MIT",
   "dependencies": {
     "electron-positioner": "^3.0.0"
   },
   "devDependencies": {
-    "electron": "^1.6.8",
+    "electron": "^1.7.9",
     "eslint": "^3.19.0"
   },
   "repository": {

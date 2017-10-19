@@ -3,32 +3,42 @@ const { app, BrowserWindow, Tray } = require("electron");
 const path = require("path");
 const url = require("url");
 const { ipcMain, globalShortcut, Menu } = require("electron");
+const IPC_EVENT = require("./utils/IPC_EVENT");
+const utils = require("./utils/utils");
 
-let win;
-let tray;
+let mainWindow;
+let trayButton;
+let miniPlayerWindow;
 
-let  iconPath;
+let iconPath;
 
+var inMiniPlayerMode = false;
+
+/**
+ * Create main window, miniplayer window and register shortcuts.
+ */
 app.on("ready", () => {
-	iconPath = path.join(__dirname,"./icon.ico");
+	iconPath = path.join(__dirname, "./icon.ico");
 	createWindow();
+	var bounds = setUpTray();
+	createMiniPlayerWindow(bounds);
+	positionWin();
 	registerShorts();
 });
 
 app.on("window-all-closed", () => {
-	win = null;
-	if(!tray.isDestoryed()){
-		tray.destroy();
+	mainWindow = null;
+	miniPlayerWindow = null;
+	if (trayButton && !trayButton.isDestoryed()) {
+		trayButton.destroy();
 	}
+	trayButton = null;
+	ipcMain.removeAllListeners();
 	app.quit();
 });
 
-/**
- * Creates our main window
- */
 function createWindow() {
-
-	win = new BrowserWindow({
+	mainWindow = new BrowserWindow({
 		frame: false,
 		icon: iconPath,
 		backgroundColor: "#333333",
@@ -36,108 +46,147 @@ function createWindow() {
 		autoHideMenuBar: true
 	});
 
-	win.maximize();
+	mainWindow.maximize();
 
 	var htmlUrl = url.format({
-		pathname: path.join(__dirname, "./src/index.html"),
+		pathname: path.join(__dirname, "./src/mainWindow/index.html"),
 		protocol: "file:",
 		slashes: true
 	});
 
-	win.loadURL(htmlUrl);
-	win.webContents.on("new-window", function (event, url, frameName, disposition, windowOptions) {
+	mainWindow.loadURL(htmlUrl);
+	mainWindow.webContents.on("new-window", function (event, url, frameName, disposition, windowOptions) {
 		windowOptions["node-integration"] = false;
 	});
 }
 
-/**
- * Register the global shortcuts
- */
+function createMiniPlayerWindow(bounds) {
+	// var windCoords = utils.figureOutPosition(bounds,electron.screen.getPrimaryDisplay().workAreaSize);
+	miniPlayerWindow = new BrowserWindow({
+		frame: false,
+		backgroundColor: "#333333",
+		skipTaskbar: true,
+		resizable: false,
+		width: 370,
+		height: 150,
+		show: false
+	});
+
+	var htmlUrl = url.format({
+		pathname: path.join(__dirname, "./src/miniPlayerWindow/index.html"),
+		protocol: "file:",
+		slashes: true
+	});
+
+	miniPlayerWindow.loadURL(htmlUrl);
+}
+
 function registerShorts() {
-	globalShortcut.register("MediaNextTrack", () => {
-		win.webContents.send("shortCut", "nextClicked");
-	});
 
-	globalShortcut.register("MediaPreviousTrack", () => {
-		win.webContents.send("shortCut", "prevClicked");
-	});
+	const mappings = {
+		"MediaNextTrack": "nextClicked",
+		"MediaPreviousTrack": "prevClicked",
+		"MediaPlayPause": "playClicked",
+		"CommandOrControl+3": "likeClicked",
+		"CommandOrControl+4": "repeatClicked"
+	};
 
-	globalShortcut.register("MediaPlayPause", () => {
-		win.webContents.send("shortCut", "playClicked");
-	});
+	for (let key in mappings) {
+		globalShortcut.register(key, () => {
+			if (inMiniPlayerMode)
+				miniPlayerWindow.webContents.send(IPC_EVENT.CONTROL_EVENT_OCCURED, mappings[key]);
+			else
+				mainWindow.webContents.send(IPC_EVENT.CONTROL_EVENT_OCCURED, mappings[key]);
+		});
+	}
 
 	globalShortcut.register("MediaStop", () => {
 		//quit the app?
-		win.close();
-	});
-
-	globalShortcut.register("CommandOrControl+3", () => {
-		//repeat toggle
-		win.webContents.send("shortCut", "likeClicked");
-	});
-
-	globalShortcut.register("CommandOrControl+4", () => {
-		//like here
-		win.webContents.send("shortCut", "repeatClicked");
+		if (inMiniPlayerMode)
+			miniPlayerWindow.close();
+		else
+			mainWindow.close();
 	});
 
 }
+
+ipcMain.on(IPC_EVENT.MINIMIZE_WINDOW, () => {
+	mainWindow.minimize();
+});
+
+ipcMain.on(IPC_EVENT.MAXIMIZE_WINDOW, () => {
+	if (mainWindow.isMaximized()) {
+		mainWindow.unmaximize();
+	} else {
+		mainWindow.maximize();
+	}
+});
+
+ipcMain.on(IPC_EVENT.CLOSE_WINDOW, () => {
+	mainWindow.close();
+	miniPlayerWindow.close();
+});
+
+/**
+ * Moving to mini player state. 
+ */
+ipcMain.on(IPC_EVENT.SHOW_MINI_PLAYER, (event, details) => {
+	inMiniPlayerMode = true;
+	mainWindow.setSkipTaskbar(true);
+	mainWindow.hide();
+	miniPlayerWindow.show();
+	miniPlayerWindow.webContents.send(IPC_EVENT.MINI_MUSIC_DETAILS, details);
+});
+
+ipcMain.on(IPC_EVENT.UPDATE_MINI_PLAYER, (event, eventDetails) => {
+	miniPlayerWindow.webContents.send(IPC_EVENT.MINI_MUSIC_DETAILS, eventDetails);
+});
+
+/**
+ * Moving to browser state.
+ */
+ipcMain.on(IPC_EVENT.OPEN_BROWSER_WINDOW, () => {
+	inMiniPlayerMode = false;
+	miniPlayerWindow.hide();
+	mainWindow.setSkipTaskbar(false);
+	mainWindow.show();
+});
 
 function positionWin() {
 	var Positioner = require("electron-positioner");
-	var positioner = new Positioner(win);
+	var positioner = new Positioner(miniPlayerWindow);
 	var pos = (process.platform === "win32") ? "bottomRight" : "topRight";
 	positioner.move(pos);
 }
-
-ipcMain.on("mini_player", () => {
-	win.setSkipTaskbar(true);
-	setUpTray();
-	win.setSize(370, 150);
-	positionWin();
-});
 
 function setUpTray() {
 	const contextMenu = Menu.buildFromTemplate([
 		{ label: "Quit", role: "quit" }
 	]);
-	tray = new Tray(iconPath);
-	tray.setToolTip("Shows the mini-player");
-	tray.setContextMenu(contextMenu);
-	tray.on("click", () => {
-		win.isVisible() ? win.hide() : win.show();
+	trayButton = new Tray(iconPath);
+	trayButton.setToolTip("Shows the mini-player");
+	trayButton.setContextMenu(contextMenu);
+	trayButton.on("click", () => {
+		if (inMiniPlayerMode)
+			miniPlayerWindow.isVisible() ? miniPlayerWindow.hide() : miniPlayerWindow.show();
+		else
+			mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
 	});
-	tray.on("double-click",()=>{
+	trayButton.on("double-click", () => {
 		// (╯°□°）╯︵ ┻━┻
-		win.show();
+		if (inMiniPlayerMode)
+			miniPlayerWindow.show();
+		else
+			mainWindow.show();
 	});
-	tray.on("right-click", () => {
-		tray.popUpContextMenu();
+	trayButton.on("right-click", () => {
+		trayButton.popUpContextMenu();
 	});
+	return trayButton.getBounds();
 }
 
-ipcMain.on("web_player", () => {
-	tray.destroy();
-	win.setSkipTaskbar(false);
-	win.setSize(800, 600);
-	win.setPosition(0, 0);
-	win.maximize();
-});
-
-ipcMain.on("min_win", () => {
-	win.minimize();
-});
-
-ipcMain.on("max_win", () => {
-	if (win.isMaximized()) {
-		win.unmaximize();
-	} else {
-		win.maximize();
-	}
-});
-
-ipcMain.on("close_win", () => {
-	win.close();
+ipcMain.on(IPC_EVENT.MINI_PLAYER_EVENTS, (event,args) => {
+	mainWindow.webContents.send(IPC_EVENT.CONTROL_EVENT_OCCURED,args);
 });
 
 ipcMain.on("notify", (event, arg) => {

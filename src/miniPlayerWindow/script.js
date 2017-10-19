@@ -1,47 +1,8 @@
+const IPC_EVENT = require("../../utils/IPC_EVENT");
 const { ipcRenderer } = require("electron");
 
-var wbView = document.getElementById("wview");
-
-ipcRenderer.on("shortCut", (event, arg) => {
-	eval(arg + "()");
-});
-
-wbView.addEventListener("did-finish-load", () => {
-	document.getElementById("splash-img").style.display = "none";
-});
-
-wbView.addEventListener("page-title-updated", () => {
-	document.getElementById("title-text").innerHTML = wbView.getTitle();
-});
-
-wbView.addEventListener("ipc-message", (event) => {
-	switch (event.channel) {
-		case "min_play":
-			setMiniplayer(event.args[0], true);
-			break;
-		case "notify":
-			ipcRenderer.send("notify", event.args[0]);
-			break;
-		case "track_changed":
-			setMiniplayer(event.args[0], false);
-			break;
-		case "no-play-stuff":
-			alert("Play panel must be exist for mini-player", "Soundkeys");
-	}
-});
-
-function openMiniPlayer() {
-	wbView.send("mini_player");
-}
-
-function setMiniplayer(details, movingToMiniState) {
-	//set miniplayer in main process
-	if(movingToMiniState)
-		ipcRenderer.send("mini_player");
-
+ipcRenderer.on(IPC_EVENT.MINI_MUSIC_DETAILS, (event,details) => {
 	// update the view
-	document.getElementById("sc-full").style.display = "none";
-	document.getElementById("min-play").style.display = "inline";
 	document.getElementsByClassName("min-img")[0].src = details.img_url;
 	document.getElementsByClassName("track-details")[0].innerHTML = details.title;
 	var play = document.getElementsByClassName("pc-play")[0].children[0];
@@ -61,19 +22,7 @@ function setMiniplayer(details, movingToMiniState) {
 	} else {
 		repeatBtn.classList.remove("activated");
 	}
-}
-
-function minimizeWin() {
-	ipcRenderer.send("min_win");
-}
-
-function maximizeWin() {
-	ipcRenderer.send("max_win");
-}
-
-function closeWin() {
-	ipcRenderer.send("close_win");
-}
+});
 
 function prevClicked() {
 	//just in case, track doesnt have anything to skip backward to
@@ -82,7 +31,7 @@ function prevClicked() {
 		play.classList.add("fa-pause");
 		play.classList.remove("fa-play");
 	}
-	wbView.send("prevTrack");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "prevTrack");
 }
 
 function nextClicked() {
@@ -92,7 +41,7 @@ function nextClicked() {
 		play.classList.add("fa-pause");
 		play.classList.remove("fa-play");
 	}
-	wbView.send("nextTrack");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "nextTrack");
 }
 
 function playClicked() {
@@ -100,7 +49,7 @@ function playClicked() {
 	var is_playing = play.classList.contains("fa-pause");
 	play.classList.add(is_playing ? "fa-play" : "fa-pause");
 	play.classList.remove(is_playing ? "fa-pause" : "fa-play");
-	wbView.send("playTrack");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "playTrack");
 }
 
 function likeClicked() {
@@ -110,7 +59,7 @@ function likeClicked() {
 	} else {
 		likeBtn.classList.add("activated");
 	}
-	wbView.send("likeTrack");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "likeTrack");
 }
 
 function repeatClicked() {
@@ -120,28 +69,9 @@ function repeatClicked() {
 	} else {
 		repeatBtn.classList.add("activated");
 	}
-	wbView.send("repeatTrack");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "repeatTrack");
 }
 
 function webClicked() {
-	ipcRenderer.send("web_player");
-	wbView.send("web_player");
-	document.getElementById("sc-full").style.display = "flex";
-	document.getElementById("min-play").style.display = "none";
-}
-
-function backNav() {
-	if (wbView.canGoBack()) {
-		wbView.goBack();
-	}
-}
-
-function forwNav() {
-	if (wbView.canGoForward()) {
-		wbView.goForward();
-	}
-}
-
-function reloadNav() {
-	wbView.reload();
+	ipcRenderer.send(IPC_EVENT.OPEN_BROWSER_WINDOW);
 }
