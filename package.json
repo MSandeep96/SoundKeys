@@ -2,9 +2,9 @@
   "name": "soundkeys",
   "version": "2.0.0",
   "description": "Souncloud delivered in a wrapper with a mini player 💎.",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron main.js",
+    "start": "electron src/main.js",
     "test": "eslint ."
   },
   "productName": "Soundkeys",

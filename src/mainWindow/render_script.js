@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-const IPC_EVENT = require("../../utils/IPC_EVENT");
+const IPC_EVENT = require("../utils/IPC_EVENT");
 const WEB_VIEW_EVENT = require("./WEB_VIEW_EVENT");
 
 var wbView = document.getElementById("wview");

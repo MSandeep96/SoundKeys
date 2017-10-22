@@ -1,5 +1,5 @@
 const { ipcRenderer, remote } = require("electron");
-const IPC_EVENT = require("../../utils/IPC_EVENT");
+const IPC_EVENT = require("../utils/IPC_EVENT");
 const WEB_VIEW_EVENT = require("./WEB_VIEW_EVENT");
 //Mutation observer
 var observer;
@@ -40,6 +40,11 @@ function sendTrackDetails(inMiniPlayerState) {
 
 	try {
 		playerState.title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[0].children[1].innerHTML;
+		if(playerState.title.length>27){
+			playerState.title = playerState.substr(0,27) + "...";
+		}
+
+		playerState.artist = document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0].children[0].text;
 
 		var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
 		var imageStyle = window.getComputedStyle(songArt, false);
@@ -47,9 +52,11 @@ function sendTrackDetails(inMiniPlayerState) {
 
 		playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
 
-		playerState.in_repeat = !document.getElementsByClassName("repeatControl")[0].classList.contains("m-none");
+		playerState.repeat_status = document.getElementsByClassName("repeatControl")[0].classList[2];
 
 		playerState.is_playing = document.getElementsByClassName("playing").length > 0;
+
+		playerState.is_shuffling = document.getElementsByClassName("shuffleControl")[0].classList.contains("m-shuffling");
 
 		if (!inMiniPlayerState) {
 			ipcRenderer.sendToHost(WEB_VIEW_EVENT.MIN_PLAYER_BUTTON_CLICKED, playerState);

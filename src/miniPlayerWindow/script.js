@@ -1,4 +1,4 @@
-const IPC_EVENT = require("../../utils/IPC_EVENT");
+const IPC_EVENT = require("../utils/IPC_EVENT");
 const { ipcRenderer } = require("electron");
 
 ipcRenderer.on(IPC_EVENT.MINI_MUSIC_DETAILS, (event,details) => {
