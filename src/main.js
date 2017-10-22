@@ -15,7 +15,7 @@ let iconPath;
 let inMiniPlayerMode = false;
 
 /**
- * Create main window, miniplayer window and register shortcuts.
+ * Create main window, mini-player window and register shortcuts.
  */
 app.on("ready", () => {
 	iconPath = path.join(__dirname, "./icon.ico");
@@ -61,7 +61,7 @@ function createWindow() {
 }
 
 function createMiniPlayerWindow(bounds) {
-	// var windCoords = utils.figureOutPosition(bounds,electron.screen.getPrimaryDisplay().workAreaSize);
+	// let windCoords = utils.figureOutPosition(bounds,electron.screen.getPrimaryDisplay().workAreaSize);
 	miniPlayerWindow = new BrowserWindow({
 		frame: false,
 		backgroundColor: "#333333",
@@ -130,7 +130,7 @@ ipcMain.on(IPC_EVENT.CLOSE_WINDOW, () => {
 });
 
 /**
- * Moving to mini player state. 
+ * Moving to mini player state.
  */
 ipcMain.on(IPC_EVENT.SHOW_MINI_PLAYER, (event, details) => {
 	inMiniPlayerMode = true;
