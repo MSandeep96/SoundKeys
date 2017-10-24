@@ -1,8 +1,8 @@
 const IPC_EVENT = require("../utils/IPC_EVENT");
 const { ipcRenderer } = require("electron");
 
-var has_scroll = false;
-var dir;
+let has_scroll = false;
+let dir;
 
 ipcRenderer.on(IPC_EVENT.MINI_MUSIC_DETAILS, (event, details) => {
 	// update the view
@@ -83,10 +83,11 @@ $(".favorite").click(() => {
 
 $(".shuffle").click(() => {
 	$(".shuffle i").toggleClass("active");
+	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "shuffleTrack");
 });
 
 $(".replay").click(() => {
-	var btn = $(".replay i");
+	let btn = $(".replay i");
 	if (btn.hasClass("active")) {
 		if (btn.text() === "repeat_one") {
 			btn.text("repeat");
@@ -101,11 +102,15 @@ $(".replay").click(() => {
 });
 
 $(".play").click(() => {
-	var btn = $(".play i");
+	let btn = $(".play i");
 	if (btn.text() === "pause") {
 		btn.text("play_arrow");
 	} else {
 		btn.text("pause");
 	}
 	ipcRenderer.send(IPC_EVENT.MINI_PLAYER_EVENTS, "playTrack");
+});
+
+$(".popUp").click(()=>{
+	ipcRenderer.send(IPC_EVENT.OPEN_BROWSER_WINDOW);
 });

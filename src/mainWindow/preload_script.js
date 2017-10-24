@@ -43,7 +43,6 @@ function sendTrackDetails(inMiniPlayerState) {
 		if(playerState.title.length>27){
 			playerState.title = playerState.title.substr(0,27) + "...";
 		}
-
 		playerState.artist = document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0].children[0].text;
 
 		let songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
@@ -123,4 +122,8 @@ ipcRenderer.on("repeatTrack", () => {
 			silent: true
 		});
 	}
+});
+
+ipcRenderer.on("shuffleTrack", ()=>{
+	document.getElementsByClassName("shuffleControl")[0].click();
 });

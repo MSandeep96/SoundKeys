@@ -90,7 +90,8 @@ function registerShorts() {
 		"MediaPreviousTrack": "prevClicked",
 		"MediaPlayPause": "playClicked",
 		"CommandOrControl+3": "likeClicked",
-		"CommandOrControl+4": "repeatClicked"
+		"CommandOrControl+4": "repeatClicked",
+		"CommandOrControl+5": "shuffleClicked"
 	};
 
 	for (let key in mappings) {
