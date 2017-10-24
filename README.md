@@ -1,4 +1,4 @@
-# <img src='./icon.ico' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
+# <img src='./src/icon.ico' height='37' align='center' alt='Soundkeys Logo'> SoundKeys
 
 Soundkeys serves straight from Soundcloud. Benefit from the website's features and caching! 😼
 
@@ -21,8 +21,9 @@ Global shortcuts :
 | `MediaNextTrack`               | Next Track       |
 | `MediaPreviousTrack`           | Previous Track   |
 | `MediaPlayPause`               | Play/Pause Track |
-| `Ctrl+4`                       | Repeat Toggle    | 
 | `Ctrl+3`                       | Like Toggle      |
+| `Ctrl+4`                       | Repeat Toggle    |
+| `Ctrl+5`                       | Shuffle Toggle   |
 
 ## Notifications 
 

@@ -2,7 +2,7 @@ const { ipcRenderer, remote } = require("electron");
 const IPC_EVENT = require("../utils/IPC_EVENT");
 const WEB_VIEW_EVENT = require("./WEB_VIEW_EVENT");
 //Mutation observer
-var observer;
+let observer;
 
 /*
 var oldNotify = window.Notification;
@@ -19,16 +19,16 @@ window.Notification = function (title, options) {
 /**
  * When in mini player mode, we add a mutation observer which handles track changes.
  */
-ipcRenderer.on(IPC_EVENT.SHOW_MINI_PLAYER, (event, arg) => {
+ipcRenderer.on(IPC_EVENT.SHOW_MINI_PLAYER, () => {
 
 	//set present title of track
-	var target = document.getElementsByClassName("playbackSoundBadge")[0];
-	if (!target || target.children.length == 0) {
+	let target = document.getElementsByClassName("playbackSoundBadge")[0];
+	if (!target || target.children.length === 0) {
 		ipcRenderer.sendToHost("no-play-stuff");
 		return;
 	}
 	observer = new MutationObserver(sendTrackDetails);
-	var config = { characterData: true, childList: true };
+	let config = { characterData: true, childList: true };
 	observer.observe(target, config);
 
 	sendTrackDetails(false);
@@ -36,18 +36,18 @@ ipcRenderer.on(IPC_EVENT.SHOW_MINI_PLAYER, (event, arg) => {
 
 function sendTrackDetails(inMiniPlayerState) {
 	//send title avatar like and repeat status to host
-	var playerState = {};
+	let playerState = {};
 
 	try {
 		playerState.title = document.getElementsByClassName("playbackSoundBadge__title")[0].children[0].children[1].innerHTML;
 		if(playerState.title.length>27){
-			playerState.title = playerState.substr(0,27) + "...";
+			playerState.title = playerState.title.substr(0,27) + "...";
 		}
 
 		playerState.artist = document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0].children[0].text;
 
-		var songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
-		var imageStyle = window.getComputedStyle(songArt, false);
+		let songArt = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0];
+		let imageStyle = window.getComputedStyle(songArt);
 		playerState.img_url = imageStyle.backgroundImage.slice(5, -2);
 
 		playerState.is_liked = document.getElementsByClassName("playbackSoundBadge__like")[0].classList.contains("sc-button-selected");
@@ -69,29 +69,29 @@ function sendTrackDetails(inMiniPlayerState) {
 	}
 }
 
-ipcRenderer.on("web_player", (event, arg) => {
+ipcRenderer.on("web_player", () => {
 	observer.disconnect();
 });
 
-ipcRenderer.on("nextTrack", (event, arg) => {
+ipcRenderer.on("nextTrack", () => {
 	document.getElementsByClassName("playControls__next")[0].click();
 });
 
 
-ipcRenderer.on("prevTrack", (event, arg) => {
+ipcRenderer.on("prevTrack", () => {
 	document.getElementsByClassName("playControls__prev")[0].click();
 });
 
-ipcRenderer.on("playTrack", (event, arg) => {
+ipcRenderer.on("playTrack", () => {
 	document.getElementsByClassName("playControls__play")[0].click();
 });
 
 
-ipcRenderer.on("likeTrack", (event, arg) => {
-	var likeBtn = document.getElementsByClassName("playbackSoundBadge__like")[0];
+ipcRenderer.on("likeTrack", () => {
+	let likeBtn = document.getElementsByClassName("playbackSoundBadge__like")[0];
 	likeBtn.click();
-	var title = document.getElementsByClassName("playbackSoundBadge__title")[0].title;
-	var imageUrl = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0].style.backgroundImage;
+	let title = document.getElementsByClassName("playbackSoundBadge__title")[0].title;
+	let imageUrl = document.getElementsByClassName("playbackSoundBadge__avatar")[0].children[0].children[0].style.backgroundImage;
 	imageUrl = imageUrl.substring(5, imageUrl.length - 2);
 	if (likeBtn.className.includes("sc-button-selected")) {
 		Notification("Liked", {
@@ -109,8 +109,8 @@ ipcRenderer.on("likeTrack", (event, arg) => {
 });
 
 
-ipcRenderer.on("repeatTrack", (event, arg) => {
-	var repeatBtn = document.getElementsByClassName("repeatControl")[0];
+ipcRenderer.on("repeatTrack", () => {
+	let repeatBtn = document.getElementsByClassName("repeatControl")[0];
 	repeatBtn.click();
 	if (repeatBtn.className.includes("m-none")) {
 		Notification("Repeat : Disabled", {

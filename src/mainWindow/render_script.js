@@ -10,6 +10,7 @@ ipcRenderer.on(IPC_EVENT.CONTROL_EVENT_OCCURED, (event, arg) => {
 
 wbView.addEventListener("did-finish-load", () => {
 	document.getElementById("splash-img").style.display = "none";
+	wbView.openDevTools();
 });
 
 wbView.addEventListener("page-title-updated", () => {
